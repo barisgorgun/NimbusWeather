@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct NimbusWeatherApp: App {
+    private let diContainer: DIContainer = DIContainer.shared
+
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            HomeView(viewModel: diContainer.makeHomeViewModel())
         }
     }
 }

@@ -21,7 +21,9 @@ public struct CurrentWeatherMapper {
             pressure: dto.pressure,
             condition: condition?.main ?? "",
             icon: condition?.icon ?? "",
-            date: Date(timeIntervalSince1970: dto.dt)
+            date: Date(timeIntervalSince1970: dto.dt),
+            sunrise: Date(timeIntervalSince1970: dto.sunrise),
+            sunset: Date(timeIntervalSince1970: dto.sunset)
         )
     }
 }

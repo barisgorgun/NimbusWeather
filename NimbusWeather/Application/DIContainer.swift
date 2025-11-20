@@ -38,4 +38,12 @@ final class DIContainer {
         self.weatherRepository = WeatherRepository(apiService: weatherAPIService)
         self.getWeatherUseCase = GetWeatherUseCase(weatherRepository: weatherRepository)
     }
+
+    func makeWeatherUseCase() -> GetWeatherUseCaseProtocol {
+        GetWeatherUseCase(weatherRepository: weatherRepository)
+    }
+    
+    func makeHomeViewModel() -> HomeViewModel {
+        HomeViewModel(weatherUseCase: makeWeatherUseCase())
+    }
 }

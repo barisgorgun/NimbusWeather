@@ -14,5 +14,7 @@ public struct CurrentWeatherDTO: Decodable, Sendable {
     public let humidity: Int
     public let wind_speed: Double
     public let pressure: Int
+    public let sunrise: Double
+    public let sunset: Double
     public let weather: [WeatherConditionDTO]
 }

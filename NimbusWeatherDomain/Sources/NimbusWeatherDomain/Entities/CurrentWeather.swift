@@ -16,6 +16,8 @@ public struct CurrentWeather: Sendable, Equatable {
     public let condition: String
     public let icon: String
     public let date: Date
+    public let sunrise: Date
+    public let sunset: Date
 
     public init(
         temperature: Double,
@@ -25,7 +27,9 @@ public struct CurrentWeather: Sendable, Equatable {
         pressure: Int,
         condition: String,
         icon: String,
-        date: Date
+        date: Date,
+        sunrise: Date,
+        sunset: Date
     ) {
         self.temperature = temperature
         self.feelsLike = feelsLike
@@ -35,5 +39,7 @@ public struct CurrentWeather: Sendable, Equatable {
         self.condition = condition
         self.icon = icon
         self.date = date
+        self.sunrise = sunrise
+        self.sunset = sunset
     }
 }
