@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A832DC022ECF0CE900690DA4 /* NimbusWeatherDomain in Frameworks */ = {isa = PBXBuildFile; productRef = A832DC012ECF0CE900690DA4 /* NimbusWeatherDomain */; };
+		A832DC052ECF0DAF00690DA4 /* NimbusWeatherData in Frameworks */ = {isa = PBXBuildFile; productRef = A832DC042ECF0DAF00690DA4 /* NimbusWeatherData */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		A832DBC12ECF0A7400690DA4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,14 +32,11 @@
 		A832DBB32ECF0A7200690DA4 /* NimbusWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NimbusWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A832DBC02ECF0A7400690DA4 /* NimbusWeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NimbusWeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A832DBCA2ECF0A7400690DA4 /* NimbusWeatherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NimbusWeatherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A832DBFF2ECF0CC500690DA4 /* NimbusWeatherDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NimbusWeatherDomain; sourceTree = "<group>"; };
+		A832DC032ECF0D0A00690DA4 /* NimbusWeatherData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NimbusWeatherData; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A832DBB52ECF0A7200690DA4 /* NimbusWeather */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = NimbusWeather;
-			sourceTree = "<group>";
-		};
 		A832DBC32ECF0A7400690DA4 /* NimbusWeatherTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = NimbusWeatherTests;
@@ -45,6 +47,11 @@
 			path = NimbusWeatherUITests;
 			sourceTree = "<group>";
 		};
+		A832DBF92ECF0B4000690DA4 /* NimbusWeather */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = NimbusWeather;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +59,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A832DC022ECF0CE900690DA4 /* NimbusWeatherDomain in Frameworks */,
+				A832DC052ECF0DAF00690DA4 /* NimbusWeatherData in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,9 +84,12 @@
 		A832DBAA2ECF0A7200690DA4 = {
 			isa = PBXGroup;
 			children = (
-				A832DBB52ECF0A7200690DA4 /* NimbusWeather */,
+				A832DC032ECF0D0A00690DA4 /* NimbusWeatherData */,
+				A832DBFF2ECF0CC500690DA4 /* NimbusWeatherDomain */,
+				A832DBF92ECF0B4000690DA4 /* NimbusWeather */,
 				A832DBC32ECF0A7400690DA4 /* NimbusWeatherTests */,
 				A832DBCD2ECF0A7400690DA4 /* NimbusWeatherUITests */,
+				A832DC002ECF0CE900690DA4 /* Frameworks */,
 				A832DBB42ECF0A7200690DA4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +102,13 @@
 				A832DBCA2ECF0A7400690DA4 /* NimbusWeatherUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A832DC002ECF0CE900690DA4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -108,10 +127,12 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				A832DBB52ECF0A7200690DA4 /* NimbusWeather */,
+				A832DBF92ECF0B4000690DA4 /* NimbusWeather */,
 			);
 			name = NimbusWeather;
 			packageProductDependencies = (
+				A832DC012ECF0CE900690DA4 /* NimbusWeatherDomain */,
+				A832DC042ECF0DAF00690DA4 /* NimbusWeatherData */,
 			);
 			productName = NimbusWeather;
 			productReference = A832DBB32ECF0A7200690DA4 /* NimbusWeather.app */;
@@ -578,6 +599,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A832DC012ECF0CE900690DA4 /* NimbusWeatherDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NimbusWeatherDomain;
+		};
+		A832DC042ECF0DAF00690DA4 /* NimbusWeatherData */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NimbusWeatherData;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A832DBAB2ECF0A7200690DA4 /* Project object */;
 }
