@@ -19,15 +19,41 @@ struct HomeView: View {
         }
 
     var body: some View {
-        ZStack {
-            backgroundGradient
-                .ignoresSafeArea()
+        NavigationStack {
+            ZStack {
+                backgroundGradient
+                    .ignoresSafeArea()
 
-            contentView
+                contentView
+            }
+            .task { await requestPermissionAndLoad() }
+            .onChange(of: viewModel.state) { _, newValue in
+                updateBackground(for: newValue)
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: SettingsView()) {
+                        Image(systemName: "gearshape.fill")
+                            .foregroundColor(.white)
+                    }
+                }
+            }
         }
-        .task { await requestPermissionAndLoad() }
-        .onChange(of: viewModel.state) { _, newValue in
-            updateBackground(for: newValue)
+    }
+}
+
+extension HomeView {
+    @ToolbarContentBuilder
+    private var settingsButton: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button {
+                SettingsView()
+            } label: {
+                Image(systemName: "gearshape.fill")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundColor(.white)
+                    .symbolRenderingMode(.hierarchical)
+            }
         }
     }
 }

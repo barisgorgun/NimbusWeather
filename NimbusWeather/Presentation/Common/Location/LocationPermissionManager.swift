@@ -17,7 +17,7 @@ final class LocationPermissionManager: NSObject, CLLocationManagerDelegate {
     }
 
     func requestPermission() async -> CLAuthorizationStatus {
-        let current = manager.authorizationStatus
+        let current = checkStatus()
 
         if current != .notDetermined {
             return current
@@ -27,6 +27,10 @@ final class LocationPermissionManager: NSObject, CLLocationManagerDelegate {
             self.continuation = continuation
             manager.requestWhenInUseAuthorization()
         }
+    }
+
+    func checkStatus() -> CLAuthorizationStatus {
+        manager.authorizationStatus
     }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
