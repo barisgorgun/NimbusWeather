@@ -16,7 +16,7 @@ struct HourlyForecastItemView: View {
                 .font(.caption)
                 .foregroundColor(.white.opacity(0.9))
 
-            CachedAsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(model.icon)@2x.png"))
+            CachedAsyncImage(url: model.iconURL)
             .frame(width: 40, height: 40)
 
             Text(model.temperature)

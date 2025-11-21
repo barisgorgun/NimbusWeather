@@ -13,6 +13,10 @@ struct DailyWeatherUIModel: Identifiable, Equatable {
     let minTemp: String
     let maxTemp: String
     let icon: String
+
+    var iconURL: URL? {
+        URL(string: "https://openweathermap.org/img/wn/\(icon)@4x.png")
+    }
 }
 
 extension DailyWeatherUIModel {

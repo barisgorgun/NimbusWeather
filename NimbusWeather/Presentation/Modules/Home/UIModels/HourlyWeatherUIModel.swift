@@ -12,4 +12,8 @@ struct HourlyWeatherUIModel: Identifiable, Equatable {
     let hour: String
     let temperature: String
     let icon: String
+    
+    var iconURL: URL? {
+        URL(string: "https://openweathermap.org/img/wn/\(icon)@4x.png")
+    }
 }

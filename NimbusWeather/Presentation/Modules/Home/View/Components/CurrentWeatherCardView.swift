@@ -11,28 +11,30 @@ struct CurrentWeatherCardView: View {
     let model: CurrentWeatherUIModel
 
     var body: some View {
-        HStack(spacing: 12) {
-            CachedAsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(model.icon)@2x.png"))
-                .frame(width: 100, height: 100)
+        HStack(spacing: 20) {
+            CachedAsyncImage(url: model.iconURL)
+                .frame(width: 90, height: 90)
+                .shadow(color: .black.opacity(0.25), radius: 10)
 
-            VStack(spacing: 8) {
+            VStack(alignment: .leading, spacing: 8) {
                 Text(model.temperature)
                     .font(.system(size: 64, weight: .bold))
                     .foregroundColor(.white)
+                    .minimumScaleFactor(0.7)
 
-                HStack {
+                HStack(spacing: 12) {
                     Text("H: \(model.high)")
                     Text("L: \(model.low)")
                 }
                 .font(.headline)
-                .foregroundColor(.white.opacity(0.8))
+                .foregroundColor(.white.opacity(0.85))
 
                 Text(model.feelsLikeDescription)
                     .font(.footnote)
                     .foregroundColor(.white.opacity(0.8))
             }
         }
-        .padding(.vertical, 16)
+        .padding(.horizontal, 8)
     }
 }
 

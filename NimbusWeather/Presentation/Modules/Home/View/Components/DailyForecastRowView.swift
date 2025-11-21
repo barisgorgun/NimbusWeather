@@ -18,7 +18,7 @@ struct DailyForecastRowView: View {
 
             Spacer()
 
-            CachedAsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(model.icon)@2x.png"))
+            CachedAsyncImage(url: model.iconURL)
             .frame(width: 32, height: 32)
 
             Spacer()

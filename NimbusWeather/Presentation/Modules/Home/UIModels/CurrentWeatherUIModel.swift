@@ -18,4 +18,8 @@ struct CurrentWeatherUIModel: Equatable {
     let humidity: String
     let windSpeed: String
     let pressure: String
+
+    var iconURL: URL? {
+        URL(string: "https://openweathermap.org/img/wn/\(icon)@4x.png")
+    }
 }
