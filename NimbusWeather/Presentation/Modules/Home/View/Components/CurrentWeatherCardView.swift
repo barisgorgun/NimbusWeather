@@ -12,17 +12,8 @@ struct CurrentWeatherCardView: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            AsyncImage(
-                         url: URL(string: "https://openweathermap.org/img/wn/\(model.icon)@2x.png")
-                     ) { img in
-                         img
-                             .resizable()
-                             .scaledToFit()
-                     } placeholder: {
-                         ProgressView()
-                     }
-                     .symbolRenderingMode(.multicolor)
-                     .frame(width: 100, height: 100)
+            CachedAsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(model.icon)@2x.png"))
+                .frame(width: 100, height: 100)
 
             VStack(spacing: 8) {
                 Text(model.temperature)

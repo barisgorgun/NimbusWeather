@@ -60,7 +60,7 @@ extension HomeView {
                     .progressViewStyle(CircularProgressViewStyle(tint: .white))
             case .loaded(let uiModel):
                 ScrollView(showsIndicators: false) {
-                    VStack(spacing: 24) {
+                    VStack(spacing: 28) {
                         HomeHeaderView(
                             location: "Istanbul",
                             condition: uiModel.current.condition,

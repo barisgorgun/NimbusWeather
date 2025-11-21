@@ -18,13 +18,7 @@ struct DailyForecastRowView: View {
 
             Spacer()
 
-            AsyncImage(
-                url: URL(string: "https://openweathermap.org/img/wn/\(model.icon)@2x.png")
-            ) { img in
-                img.resizable().scaledToFit()
-            } placeholder: {
-                ProgressView()
-            }
+            CachedAsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(model.icon)@2x.png"))
             .frame(width: 32, height: 32)
 
             Spacer()
