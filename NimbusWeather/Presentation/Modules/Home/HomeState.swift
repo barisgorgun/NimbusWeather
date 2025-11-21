@@ -10,7 +10,8 @@ import NimbusWeatherDomain
 
 enum HomeState: Equatable {
     case idle
-    case loading
+    case initialLoading
+    case weatherLoading(String)
     case loaded(HomeUIModel)
     case error(String)
 }

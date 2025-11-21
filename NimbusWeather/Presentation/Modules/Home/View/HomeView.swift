@@ -12,6 +12,16 @@ import CoreLocation
 struct HomeView: View {
     @StateObject private var viewModel: HomeViewModel
     @State private var permissionManager = LocationPermissionManager()
+    @State private var backgroundGradient: AnyView = AnyView(
+        LinearGradient(
+            colors: [
+                Color(red: 0.10, green: 0.12, blue: 0.22),
+                Color(red: 0.05, green: 0.06, blue: 0.13)
+            ],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    )
 
     init(viewModel: HomeViewModel) {
             _viewModel = StateObject(wrappedValue: viewModel)
@@ -19,7 +29,9 @@ struct HomeView: View {
 
     var body: some View {
         ZStack {
-            backgroundView
+            backgroundGradient
+                .ignoresSafeArea()
+
             contentView
         }
         .task {
@@ -36,31 +48,13 @@ struct HomeView: View {
                 break
             }
         }
-    }
-
-    private var backgroundView: some View {
-        Group {
-            switch viewModel.state {
-            case .loaded(let uiModel):
-                uiModel.background.style.gradient
-            case .loading:
-                LinearGradient(
-                    colors: [.black.opacity(0.4), .black],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-            case .error(_):
-                LinearGradient(
-                    colors: [.red.opacity(0.6), .black],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-            default:
-                Color.black
+        .onChange(of: viewModel.state) { _, newState in
+            if case .loaded(let uiModel) = newState {
+                withAnimation(.easeInOut(duration: 0.6)) {
+                    backgroundGradient = AnyView(uiModel.background.style.gradient)
+                }
             }
         }
-        .animation(.easeInOut(duration: 0.35), value: viewModel.state)
-        .ignoresSafeArea()
     }
 }
 
@@ -68,9 +62,16 @@ extension HomeView {
     private var contentView: some View {
         VStack(spacing: 20) {
             switch viewModel.state {
-            case .idle, .loading:
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+            case .idle, .initialLoading:
+                ZStack {
+                    WeatherLoadingView()
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            case .weatherLoading(let weather):
+                ZStack {
+                    DynamicWeatherLoadingView(condition: weather)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             case .loaded(let uiModel):
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 28) {
@@ -97,10 +98,10 @@ extension HomeView {
                     .padding(.top, 24)
                     .padding(.bottom, 32)
                 }
-            case .error(let error):
-                Text(error)
-                    .foregroundColor(.white)
-                    .padding()
+            case .error(let message):
+                WeatherErrorView(message: message) {
+                    Task { await viewModel.fetchWeatherForUserLocation() }
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)

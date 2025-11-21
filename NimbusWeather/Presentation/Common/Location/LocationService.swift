@@ -23,7 +23,7 @@ final class LocationService: LocationServiceProtocol {
             let placemarks = try await geocoder.reverseGeocodeLocation(location)
 
             if let place = placemarks.first {
-                return place.locality ?? place.administrativeArea
+                return "\(place.locality ?? "Kadıköy"), \(place.administrativeArea ?? "Istanbul") "
             }
         } catch {
             print("Geocoding error:", error)

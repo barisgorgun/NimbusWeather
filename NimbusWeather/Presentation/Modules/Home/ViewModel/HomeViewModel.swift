@@ -30,10 +30,12 @@ final class HomeViewModel: ObservableObject {
     }
 
     func fetchWeather(lat: Double, lon: Double) async {
-        state = .loading
+        state = .initialLoading
 
         do {
             let weather = try await weatherUseCase.execute(lat: lat, lon: lon)
+
+            self.state = .weatherLoading(weather.current.condition)
 
             let cityName = await locationService.resolveCityName(lat: lat, lon: lon)
             let resolvedName = cityName ?? "Current Location"
@@ -46,7 +48,7 @@ final class HomeViewModel: ObservableObject {
     }
 
     func fetchWeatherForUserLocation() async {
-        state = .loading
+        state = .initialLoading
 
         do {
             let coordinate = try await locationProvider.getLocation()
@@ -54,11 +56,12 @@ final class HomeViewModel: ObservableObject {
             let lat = coordinate.latitude
             let lon = coordinate.longitude
 
-            async let weatherTask = try await weatherUseCase.execute(lat: lat, lon: lon)
-            async let cityNameTask = await locationService.resolveCityName(lat: lat, lon: lon)
+            let weather = try await weatherUseCase.execute(lat: lat, lon: lon)
 
-            let weather = try await weatherTask
-            let cityName = await cityNameTask
+            state = .weatherLoading(weather.current.condition)
+
+            let cityName = await locationService.resolveCityName(lat: lat, lon: lon)
+
             let resolvedName = cityName ?? "Your Location"
 
             let uiModel = mapToUIModel(weather: weather, cityName: resolvedName)
