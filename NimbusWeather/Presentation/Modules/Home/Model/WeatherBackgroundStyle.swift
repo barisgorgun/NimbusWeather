@@ -102,3 +102,16 @@ public enum WeatherBackgroundStyle: Equatable {
         }
     }
 }
+
+extension WeatherBackgroundStyle {
+    static var defaultGradient: LinearGradient {
+        LinearGradient(
+            colors: [
+                Color(red: 0.18, green: 0.22, blue: 0.35),
+                Color(red: 0.07, green: 0.08, blue: 0.15)
+            ],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+}

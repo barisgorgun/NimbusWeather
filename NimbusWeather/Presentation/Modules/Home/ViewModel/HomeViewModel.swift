@@ -30,101 +30,99 @@ final class HomeViewModel: ObservableObject {
     }
 
     func fetchWeather(lat: Double, lon: Double) async {
-        state = .initialLoading
-
-        do {
-            let weather = try await weatherUseCase.execute(lat: lat, lon: lon)
-
-            self.state = .weatherLoading(weather.current.condition)
-
-            let cityName = await locationService.resolveCityName(lat: lat, lon: lon)
-            let resolvedName = cityName ?? "Current Location"
-
-            let uiModel = mapToUIModel(weather: weather, cityName: resolvedName)
-            state = .loaded(uiModel)
-        } catch {
-            state = .error(error.localizedDescription)
-        }
+        await loadWeather(lat: lat, lon: lon)
     }
 
     func fetchWeatherForUserLocation() async {
-        state = .initialLoading
+        state = .loading(.initial)
 
         do {
             let coordinate = try await locationProvider.getLocation()
-
-            let lat = coordinate.latitude
-            let lon = coordinate.longitude
-
-            let weather = try await weatherUseCase.execute(lat: lat, lon: lon)
-
-            state = .weatherLoading(weather.current.condition)
-
-            let cityName = await locationService.resolveCityName(lat: lat, lon: lon)
-
-            let resolvedName = cityName ?? "Your Location"
-
-            let uiModel = mapToUIModel(weather: weather, cityName: resolvedName)
-
-            state = .loaded(uiModel)
-
+            await loadWeather(lat: coordinate.latitude, lon: coordinate.longitude)
         } catch {
-            state = .error(error.localizedDescription)
+            state = .error("Konum alınamadı")
         }
     }
 
-    private func mapToUIModel(weather: Weather, cityName: String) -> HomeUIModel {
-        let isNightNow = isNight(
-            currentTime: weather.current.date.timeIntervalSince1970,
-            sunrise: weather.current.sunrise.timeIntervalSince1970,
-            sunset: weather.current.sunset.timeIntervalSince1970
-        )
+    private func loadWeather(lat: Double, lon: Double) async {
+            state = .loading(.initial)
 
-        let backgroundStyle = WeatherBackgroundStyleMapper.map(
-            condition: weather.current.condition,
-            isNight: isNightNow
-        )
+            do {
+                let weather = try await weatherUseCase.execute(lat: lat, lon: lon)
 
-        let backgroundUI = HomeBackgroundUIModel(style: backgroundStyle)
+                state = .loading(.condition(weather.current.condition))
 
-        let currentUI = CurrentWeatherUIModel(
-            temperature: "\(Int(weather.current.temperature))°",
-            condition: weather.current.condition,
-            feelsLikeDescription: "Feels like \(weather.current.feelsLike)°",
-            feelsLikeValue: "\(weather.current.feelsLike)°",
-            high: "\(Int(weather.daily.first?.maxTemp ?? weather.current.temperature))°",
-            low: "\(Int(weather.daily.first?.minTemp ?? weather.current.temperature))°",
-            icon: weather.current.icon,
-            humidity: "\(weather.current.humidity)%",
-            windSpeed: String(format: "%.2f km/h", weather.current.windSpeed),
-            pressure: "\(weather.current.pressure) hPa"
-        )
+                let cityName = await locationService.resolveCityName(lat: lat, lon: lon)
+                let resolvedName = cityName ?? "Current Location"
 
-        let hourlyUI = weather.hourly.prefix(12).map { hour in
-            HourlyWeatherUIModel(
-                hour: hour.formattedHour,
-                temperature: "\(Int(hour.temperature))°",
-                icon: hour.icon
+                let uiModel = buildUIModel(from: weather, cityName: resolvedName)
+
+                try? await Task.sleep(for: .milliseconds(600))
+
+                state = .loaded(uiModel)
+
+            } catch {
+                state = .error("Veri alınamadı")
+            }
+        }
+
+    private func buildUIModel(from weather: Weather, cityName: String) -> HomeUIModel {
+
+            let isNightNow = isNight(
+                currentTime: weather.current.date.timeIntervalSince1970,
+                sunrise: weather.current.sunrise.timeIntervalSince1970,
+                sunset: weather.current.sunset.timeIntervalSince1970
+            )
+
+            let backgroundStyle = WeatherBackgroundStyleMapper.map(
+                condition: weather.current.condition,
+                isNight: isNightNow
+            )
+
+            return HomeUIModel(
+                cityName: cityName,
+                background: HomeBackgroundUIModel(style: backgroundStyle),
+                current: buildCurrentUI(from: weather),
+                hourly: buildHourlyUI(from: weather),
+                daily: buildDailyUI(from: weather)
             )
         }
 
-        let dailyUI = weather.daily.prefix(7).map { day in
-            DailyWeatherUIModel(
-                day: day.formattedDay,
-                minTemp: "\(Int(day.minTemp))°",
-                maxTemp: "\(Int(day.maxTemp))°",
-                icon: day.icon
+    private func buildCurrentUI(from weather: Weather) -> CurrentWeatherUIModel {
+            CurrentWeatherUIModel(
+                temperature: "\(Int(weather.current.temperature))°",
+                condition: weather.current.condition,
+                feelsLikeDescription: "Feels like \(weather.current.feelsLike)°",
+                feelsLikeValue: "\(weather.current.feelsLike)°",
+                high: "\(Int(weather.daily.first?.maxTemp ?? weather.current.temperature))°",
+                low: "\(Int(weather.daily.first?.minTemp ?? weather.current.temperature))°",
+                icon: weather.current.icon,
+                humidity: "\(weather.current.humidity)%",
+                windSpeed: String(format: "%.2f km/h", weather.current.windSpeed),
+                pressure: "\(weather.current.pressure) hPa"
             )
         }
 
-        return HomeUIModel(
-            cityName: cityName,
-            background: backgroundUI,
-            current: currentUI,
-            hourly: hourlyUI,
-            daily: dailyUI
-        )
-    }
+    private func buildHourlyUI(from weather: Weather) -> [HourlyWeatherUIModel] {
+          weather.hourly.prefix(12).map {
+              HourlyWeatherUIModel(
+                  hour: $0.formattedHour,
+                  temperature: "\(Int($0.temperature))°",
+                  icon: $0.icon
+              )
+          }
+      }
+
+    private func buildDailyUI(from weather: Weather) -> [DailyWeatherUIModel] {
+           weather.daily.prefix(7).map {
+               DailyWeatherUIModel(
+                   day: $0.formattedDay,
+                   minTemp: "\(Int($0.minTemp))°",
+                   maxTemp: "\(Int($0.maxTemp))°",
+                   icon: $0.icon
+               )
+           }
+       }
 
     private func isNight(
         currentTime: TimeInterval,
