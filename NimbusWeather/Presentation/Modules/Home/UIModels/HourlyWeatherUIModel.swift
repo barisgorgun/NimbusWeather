@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HourlyWeatherUIModel: Identifiable {
+struct HourlyWeatherUIModel: Identifiable, Equatable {
     let id = UUID()
     let hour: String
     let temperature: String

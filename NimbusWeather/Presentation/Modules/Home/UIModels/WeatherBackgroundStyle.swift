@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public enum WeatherBackgroundStyle {
+public enum WeatherBackgroundStyle: Equatable {
     case clear
     case clouds
     case rain

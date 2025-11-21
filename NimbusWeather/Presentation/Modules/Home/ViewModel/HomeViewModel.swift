@@ -49,10 +49,13 @@ final class HomeViewModel: ObservableObject {
         let currentUI = CurrentWeatherUIModel(
             temperature: "\(Int(weather.current.temperature))°",
             condition: weather.current.condition,
-            feelsLike: "Feels like \(Int(weather.current.feelsLike))°",
+            feelsLike: "\(Int(weather.current.feelsLike))°",
             high: "\(Int(weather.daily.first?.maxTemp ?? weather.current.temperature))°",
             low: "\(Int(weather.daily.first?.minTemp ?? weather.current.temperature))°",
-            icon: weather.current.icon
+            icon: weather.current.icon,
+            humidity: "\(weather.current.humidity)",
+            windSpeed: "\(weather.current.windSpeed)",
+            pressure: "\(weather.current.pressure)"
         )
 
         let hourlyUI = weather.hourly.prefix(12).map { hour in

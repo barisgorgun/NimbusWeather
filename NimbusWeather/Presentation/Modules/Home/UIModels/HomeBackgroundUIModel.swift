@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct HomeBackgroundUIModel {
+struct HomeBackgroundUIModel: Equatable {
     let style: WeatherBackgroundStyle
 }

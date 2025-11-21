@@ -8,7 +8,7 @@
 import Foundation
 import NimbusWeatherDomain
 
-enum HomeState {
+enum HomeState: Equatable {
     case idle
     case loading
     case loaded(HomeUIModel)
@@ -16,7 +16,7 @@ enum HomeState {
 }
 
 
-struct HomeUIModel {
+struct HomeUIModel: Equatable {
     let background: HomeBackgroundUIModel
     let current: CurrentWeatherUIModel
     let hourly: [HourlyWeatherUIModel]
