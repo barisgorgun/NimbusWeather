@@ -24,12 +24,12 @@ struct HourlyForecastScrollView: View {
                 }
                 .padding(12)
             }
+            .padding(.horizontal)
             .padding(.vertical, 12)
             .background(
                 RoundedRectangle(cornerRadius: 22)
                     .fill(Color.white.opacity(0.25))
             )
-            .padding(.horizontal)
         }
     }
 }

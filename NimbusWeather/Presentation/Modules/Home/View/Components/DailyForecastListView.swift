@@ -16,13 +16,13 @@ struct DailyForecastListView: View {
                 .font(.headline)
                 .foregroundColor(.white)
 
-            VStack(spacing: 4) {
+            VStack(spacing: 8) {
                 ForEach(items) { day in
                     DailyForecastRowView(model: day)
                     if day.id != items.last?.id {
                         Divider()
                             .background(Color.white.opacity(0.2))
-                            .padding(.leading, 20)
+                            .padding(.leading, 10)
                     }
                 }
             }

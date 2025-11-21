@@ -73,7 +73,7 @@ extension HomeView {
                             humidity: uiModel.current.humidity,
                             wind: uiModel.current.windSpeed,
                             pressure: uiModel.current.pressure,
-                            feelsLike: uiModel.current.feelsLike
+                            feelsLikeValue: uiModel.current.feelsLikeValue
                         )
 
                         HourlyForecastScrollView(items: uiModel.hourly)

@@ -22,9 +22,9 @@ struct CurrentWeatherCardView: View {
                          ProgressView()
                      }
                      .symbolRenderingMode(.multicolor)
-                     .frame(width: 80, height: 80)
+                     .frame(width: 100, height: 100)
 
-            VStack(spacing: 16) {
+            VStack(spacing: 8) {
                 Text(model.temperature)
                     .font(.system(size: 64, weight: .bold))
                     .foregroundColor(.white)
@@ -36,7 +36,7 @@ struct CurrentWeatherCardView: View {
                 .font(.headline)
                 .foregroundColor(.white.opacity(0.8))
 
-                Text("Feels like \(model.feelsLike)")
+                Text(model.feelsLikeDescription)
                     .font(.footnote)
                     .foregroundColor(.white.opacity(0.8))
             }
@@ -50,7 +50,8 @@ struct CurrentWeatherCardView: View {
         model: CurrentWeatherUIModel(
             temperature: "24°",
             condition: "Cloudy",
-            feelsLike: "25°",
+            feelsLikeDescription: "Feels like ",
+            feelsLikeValue: "25°",
             high: "27°",
             low: "18°",
             icon: "03d",

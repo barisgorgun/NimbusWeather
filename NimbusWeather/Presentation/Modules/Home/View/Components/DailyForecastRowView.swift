@@ -16,41 +16,38 @@ struct DailyForecastRowView: View {
                 .font(.subheadline)
                 .foregroundColor(.white)
 
+            Spacer()
+
             AsyncImage(
                 url: URL(string: "https://openweathermap.org/img/wn/\(model.icon)@2x.png")
             ) { img in
-                img
-                    .resizable()
-                    .scaledToFit()
+                img.resizable().scaledToFit()
             } placeholder: {
                 ProgressView()
             }
-            .frame(width: 36, height: 36)
+            .frame(width: 32, height: 32)
 
-            HStack {
-                Text(model.minTemp)
-                    .foregroundColor(.white.opacity(0.8))
-                    .font(.system(size: 14))
+            Spacer()
+                .frame(width: 24)
 
-                GeometryReader { geo in
-                    let barWidth = geo.size.width
+            Text(model.minTemp)
+                .font(.subheadline)
+                .foregroundColor(.white.opacity(0.7))
 
-                    ZStack(alignment: .leading) {
-                        Capsule()
-                            .fill(.white.opacity(0.25))
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .fill(Color.white.opacity(0.15))
+                    .frame(height: 4)
 
-                        Capsule()
-                            .fill(.white.opacity(0.8))
-                            .frame(width: barWidth * model.rangeRatio)
-                    }
-                }
-                .frame(height: 6)
-
-                Text(model.maxTemp)
-                    .foregroundColor(.white.opacity(0.9))
-                    .font(.system(size: 14))
+                Capsule()
+                    .fill(Color.white)
+                    .frame(width: CGFloat(70), height: 4)
             }
-            .frame(maxWidth: .infinity)
+            .frame(width: 90)
+
+            Text(model.maxTemp)
+                .font(.subheadline)
+                .foregroundStyle(.white)
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 8)

@@ -11,7 +11,7 @@ struct MetricsGridView: View {
     let humidity: String
     let wind: String
     let pressure: String
-    let feelsLike: String
+    let feelsLikeValue: String
 
     private let columns = [
         GridItem(.flexible()),
@@ -40,7 +40,7 @@ struct MetricsGridView: View {
 
             MetricCardView(
                 title: "Feels Like",
-                value: feelsLike,
+                value: feelsLikeValue,
                 systemIcon: "thermometer.medium"
             )
         }
@@ -53,7 +53,7 @@ struct MetricsGridView: View {
         humidity: "60%",
         wind: "3.2 m/s",
         pressure: "1015 hPa",
-        feelsLike: "Feels like 25°"
+        feelsLikeValue: "25°"
     )
     .background(
         LinearGradient(colors: [.blue, .purple], startPoint: .top, endPoint: .bottom)

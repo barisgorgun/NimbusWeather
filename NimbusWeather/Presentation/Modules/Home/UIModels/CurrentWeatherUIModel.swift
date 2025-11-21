@@ -10,7 +10,8 @@ import Foundation
 struct CurrentWeatherUIModel: Equatable {
     let temperature: String
     let condition: String
-    let feelsLike: String
+    let feelsLikeDescription: String
+    let feelsLikeValue: String
     let high: String
     let low: String
     let icon: String
