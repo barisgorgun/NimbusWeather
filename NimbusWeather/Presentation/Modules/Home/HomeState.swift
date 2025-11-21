@@ -17,6 +17,7 @@ enum HomeState: Equatable {
 
 
 struct HomeUIModel: Equatable {
+    let cityName: String
     let background: HomeBackgroundUIModel
     let current: CurrentWeatherUIModel
     let hourly: [HourlyWeatherUIModel]

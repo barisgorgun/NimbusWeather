@@ -7,9 +7,11 @@
 
 import SwiftUI
 import NimbusWeatherDomain
+import CoreLocation
 
 struct HomeView: View {
     @StateObject private var viewModel: HomeViewModel
+    @State private var permissionManager = LocationPermissionManager()
 
     init(viewModel: HomeViewModel) {
             _viewModel = StateObject(wrappedValue: viewModel)
@@ -21,7 +23,18 @@ struct HomeView: View {
             contentView
         }
         .task {
-            await viewModel.fetchWeather(lat: 41.015137, lon: 28.97953)
+            let status = await permissionManager.requestPermission()
+
+            switch status {
+            case .authorizedAlways, .authorizedWhenInUse:
+                await viewModel.fetchWeatherForUserLocation()
+
+            case .denied, .restricted:
+                await viewModel.fetchWeather(lat: 41.015137, lon: 28.97953)
+
+            default:
+                break
+            }
         }
     }
 
@@ -62,7 +75,7 @@ extension HomeView {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 28) {
                         HomeHeaderView(
-                            location: "Istanbul",
+                            location: uiModel.cityName,
                             condition: uiModel.current.condition,
                             date: Date()
                         )

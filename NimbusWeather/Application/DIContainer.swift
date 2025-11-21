@@ -19,6 +19,8 @@ final class DIContainer {
 
     private(set) var apiService: APIService
     private(set) var weatherAPIService: WeatherAPIServiceProtocol
+    private let locationService: LocationServiceProtocol
+    private let locationProvider: UserLocationProviderProtocol
 
     // MARK: - Repositories
 
@@ -37,6 +39,8 @@ final class DIContainer {
         self.weatherAPIService = WeatherAPIServiceImpl(apiService: apiService, apiKey: apiKey)
         self.weatherRepository = WeatherRepository(apiService: weatherAPIService)
         self.getWeatherUseCase = GetWeatherUseCase(weatherRepository: weatherRepository)
+        self.locationService = LocationService()
+        self.locationProvider = UserLocationProvider()
     }
 
     func makeWeatherUseCase() -> GetWeatherUseCaseProtocol {
@@ -44,6 +48,10 @@ final class DIContainer {
     }
     
     func makeHomeViewModel() -> HomeViewModel {
-        HomeViewModel(weatherUseCase: makeWeatherUseCase())
+        HomeViewModel(
+            weatherUseCase: makeWeatherUseCase(),
+            locationService: locationService,
+            locationProvider: locationProvider
+        )
     }
 }

@@ -27,7 +27,7 @@ struct MetricCardView: View {
                     .foregroundColor(.white.opacity(0.7))
 
                 Text(value)
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(.subheadline.weight(.semibold))
                     .foregroundColor(.white)
             }
             Spacer()

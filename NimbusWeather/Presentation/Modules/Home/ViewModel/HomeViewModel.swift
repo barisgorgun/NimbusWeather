@@ -8,6 +8,7 @@
 import Foundation
 import NimbusWeatherDomain
 import Combine
+import CoreLocation
 
 @MainActor
 final class HomeViewModel: ObservableObject {
@@ -15,9 +16,17 @@ final class HomeViewModel: ObservableObject {
     @Published var state: HomeState = .idle
 
     private let weatherUseCase: GetWeatherUseCaseProtocol
+    private let locationService: LocationServiceProtocol
+    private let locationProvider: UserLocationProviderProtocol
 
-    init(weatherUseCase: GetWeatherUseCaseProtocol) {
+    init(
+        weatherUseCase: GetWeatherUseCaseProtocol,
+        locationService: LocationServiceProtocol,
+        locationProvider: UserLocationProviderProtocol
+    ) {
         self.weatherUseCase = weatherUseCase
+        self.locationService = locationService
+        self.locationProvider = locationProvider
     }
 
     func fetchWeather(lat: Double, lon: Double) async {
@@ -25,14 +34,43 @@ final class HomeViewModel: ObservableObject {
 
         do {
             let weather = try await weatherUseCase.execute(lat: lat, lon: lon)
-            let uiModel = mapToUIModel(weather: weather)
+
+            let cityName = await locationService.resolveCityName(lat: lat, lon: lon)
+            let resolvedName = cityName ?? "Current Location"
+
+            let uiModel = mapToUIModel(weather: weather, cityName: resolvedName)
             state = .loaded(uiModel)
         } catch {
             state = .error(error.localizedDescription)
         }
     }
 
-    private func mapToUIModel(weather: Weather) -> HomeUIModel {
+    func fetchWeatherForUserLocation() async {
+        state = .loading
+
+        do {
+            let coordinate = try await locationProvider.getLocation()
+
+            let lat = coordinate.latitude
+            let lon = coordinate.longitude
+
+            async let weatherTask = try await weatherUseCase.execute(lat: lat, lon: lon)
+            async let cityNameTask = await locationService.resolveCityName(lat: lat, lon: lon)
+
+            let weather = try await weatherTask
+            let cityName = await cityNameTask
+            let resolvedName = cityName ?? "Your Location"
+
+            let uiModel = mapToUIModel(weather: weather, cityName: resolvedName)
+
+            state = .loaded(uiModel)
+
+        } catch {
+            state = .error(error.localizedDescription)
+        }
+    }
+
+    private func mapToUIModel(weather: Weather, cityName: String) -> HomeUIModel {
         let isNightNow = isNight(
             currentTime: weather.current.date.timeIntervalSince1970,
             sunrise: weather.current.sunrise.timeIntervalSince1970,
@@ -77,6 +115,7 @@ final class HomeViewModel: ObservableObject {
         }
 
         return HomeUIModel(
+            cityName: cityName,
             background: backgroundUI,
             current: currentUI,
             hourly: hourlyUI,
