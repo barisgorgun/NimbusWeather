@@ -13,6 +13,7 @@ struct HomeView: View {
     @StateObject private var viewModel: HomeViewModel
     @State private var permissionManager = LocationPermissionManager()
     @State private var backgroundGradient: LinearGradient = WeatherBackgroundStyle.defaultGradient
+    @State private var isShowingSettings = false
 
     init(viewModel: HomeViewModel) {
             _viewModel = StateObject(wrappedValue: viewModel)
@@ -31,13 +32,11 @@ struct HomeView: View {
                 updateBackground(for: newValue)
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: SettingsView()) {
-                        Image(systemName: "gearshape.fill")
-                            .foregroundColor(.white)
-                    }
-                }
+              settingsButton
             }
+        }
+        .sheet(isPresented: $isShowingSettings) {
+            SettingsView()
         }
     }
 }
@@ -47,7 +46,7 @@ extension HomeView {
     private var settingsButton: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button {
-                SettingsView()
+                isShowingSettings = true
             } label: {
                 Image(systemName: "gearshape.fill")
                     .font(.system(size: 20, weight: .semibold))
@@ -111,7 +110,9 @@ extension HomeView {
     }
 
     private func updateBackground(for state: HomeState) {
-        guard case .loaded(let uiModel) = state else { return }
+        guard case .loaded(let uiModel) = state else {
+            return
+        }
 
         withAnimation(.easeInOut(duration: 0.6)) {
             backgroundGradient = uiModel.background.style.gradient

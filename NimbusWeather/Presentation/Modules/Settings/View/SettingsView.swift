@@ -9,16 +9,28 @@ import SwiftUI
 import CoreLocation
 
 struct SettingsView: View {
-    @StateObject private var viewModel = SettingsViewModel()
+    @EnvironmentObject var themeManager: AppThemeManager
+    @StateObject private var viewModel: SettingsViewModel
+
+    init() {
+          _viewModel = StateObject(
+              wrappedValue: SettingsViewModel(
+                locationPermissionManager: LocationPermissionManager()
+              )
+          )
+      }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 Section("Appearance") {
-                    Picker("Theme", selection: $viewModel.theme) {
-                        ForEach(Theme.allCases, id: \.self) { theme in
+                    Picker("Theme", selection: $viewModel.selectedTheme) {
+                        ForEach(AppTheme.allCases, id: \.self) { theme in
                             Text(theme.displayName).tag(theme)
                         }
+                    }
+                    .onChange(of: viewModel.selectedTheme) { _, newValue in
+                        themeManager.updateTheme(newValue)
                     }
                 }
 
@@ -56,6 +68,10 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
+        }
+        .preferredColorScheme(themeManager.currentTheme.colorScheme)
+        .onAppear {
+            viewModel.selectedTheme = themeManager.currentTheme
         }
     }
 

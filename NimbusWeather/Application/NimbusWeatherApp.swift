@@ -31,7 +31,7 @@ struct NimbusWeatherApp: App {
         WindowGroup {
             HomeView(viewModel: container.makeHomeViewModel())
                 .environmentObject(themeManager)
-                .preferredColorScheme(themeManager.colorScheme)
+                .preferredColorScheme(themeManager.currentTheme.colorScheme)
         }
     }
 }

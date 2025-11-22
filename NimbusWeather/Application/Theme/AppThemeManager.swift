@@ -9,26 +9,17 @@ import Combine
 import Foundation
 import SwiftUI
 
+@MainActor
 final class AppThemeManager: ObservableObject {
-    @Published var selectedTheme: AppTheme {
-        didSet {
-            UserDefaults.standard.set(selectedTheme.rawValue, forKey: "app_theme")
-        }
-    }
+    @AppStorage("theme") private var savedTheme: AppTheme = .system
+    @Published var currentTheme: AppTheme = .system
 
     init() {
-        let saved = UserDefaults.standard.string(forKey: "app_theme")
-        self.selectedTheme = AppTheme(rawValue: saved ?? "") ?? .system
+        currentTheme = savedTheme
     }
 
-    var colorScheme: ColorScheme? {
-        switch selectedTheme {
-        case .system:
-            nil
-        case .light:
-            .light
-        case .dark:
-            .dark
-        }
+    func updateTheme(_ theme: AppTheme) {
+        currentTheme = theme
+        savedTheme = theme
     }
 }
