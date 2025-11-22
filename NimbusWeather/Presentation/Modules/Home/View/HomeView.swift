@@ -12,7 +12,7 @@ import CoreLocation
 struct HomeView: View {
     @StateObject private var viewModel: HomeViewModel
     @State private var permissionManager = LocationPermissionManager()
-    @State private var backgroundGradient: LinearGradient = WeatherBackgroundStyle.defaultGradient
+    @State private var currentCondition: String? = nil
     @State private var isShowingSettings = false
 
     init(viewModel: HomeViewModel) {
@@ -22,9 +22,7 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                backgroundGradient
-                    .ignoresSafeArea()
-
+                backgroundView
                 contentView
             }
             .task { await requestPermissionAndLoad() }
@@ -37,6 +35,18 @@ struct HomeView: View {
         }
         .sheet(isPresented: $isShowingSettings) {
             SettingsView()
+        }
+    }
+}
+
+extension HomeView {
+    @ViewBuilder
+    private var backgroundView: some View {
+        if let condition = currentCondition {
+            DynamicWeatherBackgroundView(condition: condition)
+                .ignoresSafeArea()
+        } else {
+            Color.black.ignoresSafeArea()
         }
     }
 }
@@ -61,11 +71,8 @@ extension HomeView {
     private var contentView: some View {
         VStack(spacing: 20) {
             switch viewModel.state {
-            case .idle, .loading(.initial):
-                    WeatherLoadingView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            case .loading(.condition(let weather)):
-                DynamicWeatherLoadingView(condition: weather)
+            case .idle, .loading:
+                ProgressView("Updating Weather…")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .loaded(let uiModel):
                 loadedView(uiModel)
@@ -115,7 +122,7 @@ extension HomeView {
         }
 
         withAnimation(.easeInOut(duration: 0.6)) {
-            backgroundGradient = uiModel.background.style.gradient
+            currentCondition = "snow" //uiModel.current.condition
         }
     }
 

@@ -10,7 +10,7 @@ import NimbusWeatherDomain
 
 enum HomeState: Equatable {
     case idle
-    case loading(WeatherLoadingType)
+    case loading
     case loaded(HomeUIModel)
     case error(String)
 }
@@ -18,7 +18,7 @@ enum HomeState: Equatable {
 
 struct HomeUIModel: Equatable {
     let cityName: String
-    let background: HomeBackgroundUIModel
+    let background: String//HomeBackgroundUIModel
     let current: CurrentWeatherUIModel
     let hourly: [HourlyWeatherUIModel]
     let daily: [DailyWeatherUIModel]

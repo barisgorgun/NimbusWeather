@@ -28,10 +28,6 @@ struct HourlyForecastScrollView: View {
             .padding(.vertical, 12)
             .background(.ultraThinMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-            /*.background(
-                RoundedRectangle(cornerRadius: 22)
-                    .fill(Color.white.opacity(0.25))
-            )*/
         }
     }
 }
