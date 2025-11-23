@@ -122,7 +122,7 @@ extension HomeView {
         }
 
         withAnimation(.easeInOut(duration: 0.6)) {
-            currentCondition = "snow" //uiModel.current.condition
+            currentCondition = uiModel.current.condition
         }
     }
 

@@ -10,7 +10,7 @@ import Foundation
 struct HourlyWeatherUIModel: Identifiable, Equatable {
     let id = UUID()
     let hour: String
-    let temperature: String
+    let temperature: Double
     let icon: String
     
     var iconURL: URL? {

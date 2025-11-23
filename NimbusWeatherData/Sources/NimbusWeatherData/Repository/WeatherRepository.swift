@@ -23,7 +23,6 @@ public final class WeatherRepository: WeatherRepositoryProtocol {
 
         } catch let error as APIError {
             throw mapAPIError(error)
-
         } catch {
             throw WeatherError.unknown
         }

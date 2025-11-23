@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CurrentWeatherCardView: View {
+    @AppStorage("unit") private var unit: TemperatureUnit = .celsius
     let model: CurrentWeatherUIModel
 
     var body: some View {
@@ -17,19 +18,19 @@ struct CurrentWeatherCardView: View {
                 .shadow(color: .black.opacity(0.25), radius: 10)
 
             VStack(alignment: .leading, spacing: 8) {
-                Text(model.temperature)
+                Text(model.temperature.formattedTemperature(unit: unit))
                     .font(.system(size: 64, weight: .bold))
                     .foregroundColor(.white)
                     .minimumScaleFactor(0.7)
 
                 HStack(spacing: 12) {
-                    Text("H: \(model.high)")
-                    Text("L: \(model.low)")
+                    Text("H: \(model.high.formattedTemperature(unit: unit))")
+                    Text("L: \(model.low.formattedTemperature(unit: unit))")
                 }
                 .font(.headline)
                 .foregroundColor(.white.opacity(0.85))
 
-                Text(model.feelsLikeDescription)
+                Text("Feels like \(model.feelsLikeValue.formattedTemperature(unit: unit))")
                     .font(.footnote)
                     .foregroundColor(.white.opacity(0.8))
             }
@@ -41,12 +42,11 @@ struct CurrentWeatherCardView: View {
 #Preview {
     CurrentWeatherCardView(
         model: CurrentWeatherUIModel(
-            temperature: "24°",
+            temperature: 2.04,
             condition: "Cloudy",
-            feelsLikeDescription: "Feels like ",
-            feelsLikeValue: "25°",
-            high: "27°",
-            low: "18°",
+            feelsLikeValue: 25.0,
+            high: 27.0,
+            low: 18.0,
             icon: "03d",
             humidity: "65",
             windSpeed: "14 km/h",

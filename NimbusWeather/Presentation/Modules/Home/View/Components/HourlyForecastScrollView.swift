@@ -35,9 +35,9 @@ struct HourlyForecastScrollView: View {
 #Preview {
     HourlyForecastScrollView(
         items: [
-            HourlyWeatherUIModel(hour: "15:00", temperature: "24", icon: "03d"),
-            HourlyWeatherUIModel(hour: "16:00", temperature: "25", icon: "01d"),
-            HourlyWeatherUIModel(hour: "17:00", temperature: "23", icon: "10d")
+            HourlyWeatherUIModel(hour: "15:00", temperature: 24.0, icon: "03d"),
+            HourlyWeatherUIModel(hour: "16:00", temperature: 25.0, icon: "01d"),
+            HourlyWeatherUIModel(hour: "17:00", temperature: 23.0, icon: "10d")
         ]
     )
     .background(

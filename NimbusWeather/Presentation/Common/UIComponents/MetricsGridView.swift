@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct MetricsGridView: View {
+    @AppStorage("unit") private var unit: TemperatureUnit = .celsius
+
     let humidity: String
     let wind: String
     let pressure: String
-    let feelsLikeValue: String
+    let feelsLikeValue: Double
 
     private let columns = [
         GridItem(.flexible()),
@@ -40,7 +42,7 @@ struct MetricsGridView: View {
 
             MetricCardView(
                 title: "Feels Like",
-                value: feelsLikeValue,
+                value: feelsLikeValue.formattedTemperature(unit: unit),
                 systemIcon: "thermometer.medium"
             )
         }
@@ -53,7 +55,7 @@ struct MetricsGridView: View {
         humidity: "60%",
         wind: "3.2 m/s",
         pressure: "1015 hPa",
-        feelsLikeValue: "25°"
+        feelsLikeValue: 25.0
     )
     .background(
         LinearGradient(colors: [.blue, .purple], startPoint: .top, endPoint: .bottom)

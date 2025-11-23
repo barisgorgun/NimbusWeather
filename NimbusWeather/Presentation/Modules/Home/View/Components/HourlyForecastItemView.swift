@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HourlyForecastItemView: View {
+    @AppStorage("unit") private var unit: TemperatureUnit = .celsius
+
     let model: HourlyWeatherUIModel
 
     var body: some View {
@@ -19,7 +21,7 @@ struct HourlyForecastItemView: View {
             CachedAsyncImage(url: model.iconURL)
             .frame(width: 40, height: 40)
 
-            Text(model.temperature)
+            Text(model.temperature.formattedTemperature(unit: unit))
                 .font(.headline)
                 .foregroundColor(.white)
         }
@@ -32,7 +34,7 @@ struct HourlyForecastItemView: View {
     HourlyForecastItemView(
         model: HourlyWeatherUIModel(
             hour: "15:00",
-            temperature: "24",
+            temperature: 24.0,
             icon: "cloud.sun.fill"
         )
     )

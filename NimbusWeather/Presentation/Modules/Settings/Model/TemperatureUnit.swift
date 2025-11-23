@@ -13,9 +13,27 @@ enum TemperatureUnit: String, CaseIterable {
     var displayName: String {
         switch self {
         case .celsius:
-            "Celsius (°C)"
+            "Celsius (\(displaySembol)"
         case .fahrenheit:
-            "Fahrenheit (°F)"
+            "Fahrenheit (\(displaySembol))"
+        }
+    }
+
+    var displaySembol: String {
+        switch self {
+        case .celsius:
+            "°C"
+        case .fahrenheit:
+            "°F"
+        }
+    }
+
+    func convert(_ value: Double) -> Double {
+        switch self {
+        case .celsius:
+            value
+        case .fahrenheit:
+            (value * 9/5) + 32
         }
     }
 }
