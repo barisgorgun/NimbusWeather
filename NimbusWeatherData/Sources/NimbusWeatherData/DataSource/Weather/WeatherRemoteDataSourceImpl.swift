@@ -1,13 +1,14 @@
 //
-//  WeatherAPIServiceImpl.swift
+//  WeatherRemoteDataSourceImpl.swift
 //  NimbusWeatherData
 //
-//  Created by Gorgun, Baris on 20.11.2025.
+//  Created by Gorgun, Baris on 26.11.2025.
 //
 
 import Foundation
 
-public final class WeatherAPIServiceImpl: WeatherAPIServiceProtocol {
+public final class WeatherRemoteDataSourceImpl: WeatherRemoteDataSourceProtocol {
+
     private let apiService: APIService
     private let apiKey: String
 
@@ -17,7 +18,7 @@ public final class WeatherAPIServiceImpl: WeatherAPIServiceProtocol {
     }
 
     public func fetchWeather(lat: Double, lon: Double) async throws -> WeatherResponseDTO {
-        let endpoint = WeatherEndpoint.fetchWeather(lat: lat, lon: lon, apiKey: apiKey)
+        let endpoint = WeatherEndpoint(lat: lat, lon: lon, apiKey: apiKey)
         return try await apiService.request(endpoint)
     }
 }

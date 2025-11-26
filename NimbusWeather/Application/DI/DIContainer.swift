@@ -12,15 +12,18 @@ import NimbusWeatherDomain
 final class DIContainer {
 
     // MARK: - Services
+
         let apiService: APIService
-        let weatherAPIService: WeatherAPIServiceProtocol
+        let weatherRemoteDataSource: WeatherRemoteDataSourceProtocol
         let locationService: LocationServiceProtocol
         let locationProvider: UserLocationProviderProtocol
 
     // MARK: - Repositories
+
         let weatherRepository: WeatherRepositoryProtocol
 
         // MARK: - Use Cases
+    
         let getWeatherUseCase: GetWeatherUseCaseProtocol
 
 
@@ -28,15 +31,15 @@ final class DIContainer {
 
     init(
         apiService: APIService,
-        weatherAPIService: WeatherAPIServiceProtocol,
+        weatherRemoteDataSource: WeatherRemoteDataSourceProtocol,
         locationService: LocationServiceProtocol,
         locationProvider: UserLocationProviderProtocol
     ) {
         self.apiService = apiService
-        self.weatherAPIService = weatherAPIService
+        self.weatherRemoteDataSource = weatherRemoteDataSource
         self.locationService = locationService
         self.locationProvider = locationProvider
-        self.weatherRepository = WeatherRepository(apiService: weatherAPIService)
+        self.weatherRepository = WeatherRepository(remote: weatherRemoteDataSource)
         self.getWeatherUseCase = GetWeatherUseCase(weatherRepository: weatherRepository)
     }
     
