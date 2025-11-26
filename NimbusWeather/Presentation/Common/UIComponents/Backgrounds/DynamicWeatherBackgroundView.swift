@@ -8,12 +8,23 @@
 import SwiftUI
 
 struct DynamicWeatherBackgroundView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var isNightNow: Bool {
+        let hour = Calendar.current.component(.hour, from: Date())
+        return hour >= 19 || hour <= 6
+    }
+
     let condition: String
 
     var body: some View {
         switch condition.toWeatherConditionType {
         case .sunny:
-            SunnyBackgroundView()
+            if colorScheme == .dark || isNightNow {
+                NightBackgroundView()
+            } else {
+               SunnyBackgroundView()
+            }
         case .cloudy:
             CloudyBackgroundView()
         case .rainy:

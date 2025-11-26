@@ -50,18 +50,18 @@ struct SunnyBackgroundView: View {
     }
 
     private var backgroundGradient: LinearGradient {
-          if colorScheme == .dark {
-              return LinearGradient(
-                  colors: [
-                      Color.yellow.opacity(0.25),
-                      Color.orange.opacity(0.15),
-                      Color(red: 0.98, green: 0.85, blue: 0.60).opacity(0.15)
-                  ],
-                  startPoint: .top,
-                  endPoint: .bottom
-              )
-          } else {
-              return LinearGradient(
+        if colorScheme == .dark {
+            return LinearGradient(
+                colors: [
+                    Color.yellow.opacity(0.25),
+                    Color.orange.opacity(0.15),
+                    Color(red: 0.98, green: 0.85, blue: 0.60).opacity(0.15)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        } else {
+            return LinearGradient(
                 colors: [
                     Color(red: 0.32, green: 0.55, blue: 0.90).opacity(0.85),
                     Color(red: 0.45, green: 0.67, blue: 0.95).opacity(0.75),
@@ -69,13 +69,13 @@ struct SunnyBackgroundView: View {
                 ],
                 startPoint: .top,
                 endPoint: .bottom
-              )
-          }
-      }
+            )
+        }
+    }
 
     private var lightRayColor: Color {
-            colorScheme == .dark ? .yellow : Color.yellow.opacity(0.6)
-        }
+        colorScheme == .dark ? .yellow : Color.yellow.opacity(0.6)
+    }
 }
 
 #Preview {
