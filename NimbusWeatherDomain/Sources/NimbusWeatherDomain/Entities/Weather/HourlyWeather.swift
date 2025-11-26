@@ -10,18 +10,15 @@ import Foundation
 public struct HourlyWeather: Sendable, Equatable {
     public let date: Date
     public let temperature: Double
-    public let icon: String
-    public let condition: String
+    public let condition: WeatherCondition
 
     public init(
         date: Date,
         temperature: Double,
-        icon: String,
-        condition: String
+        condition: WeatherCondition
     ) {
         self.date = date
         self.temperature = temperature
-        self.icon = icon
         self.condition = condition
     }
 }

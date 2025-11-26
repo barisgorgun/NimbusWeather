@@ -8,38 +8,35 @@
 import Foundation
 
 public struct CurrentWeather: Sendable, Equatable {
+    public let date: Date
     public let temperature: Double
     public let feelsLike: Double
     public let humidity: Int
     public let windSpeed: Double
     public let pressure: Int
-    public let condition: String
-    public let icon: String
-    public let date: Date
     public let sunrise: Date
     public let sunset: Date
+    public let condition: WeatherCondition
 
     public init(
+        date: Date,
         temperature: Double,
         feelsLike: Double,
         humidity: Int,
         windSpeed: Double,
         pressure: Int,
-        condition: String,
-        icon: String,
-        date: Date,
         sunrise: Date,
-        sunset: Date
+        sunset: Date,
+        condition: WeatherCondition
     ) {
+        self.date = date
         self.temperature = temperature
         self.feelsLike = feelsLike
         self.humidity = humidity
         self.windSpeed = windSpeed
         self.pressure = pressure
-        self.condition = condition
-        self.icon = icon
-        self.date = date
         self.sunrise = sunrise
         self.sunset = sunset
+        self.condition = condition
     }
 }

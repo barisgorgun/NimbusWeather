@@ -1,19 +1,18 @@
 //
-//  WeatherError.swift
+//  SearchError.swift
 //  NimbusWeatherDomain
 //
-//  Created by Gorgun, Baris on 20.11.2025.
+//  Created by Gorgun, Baris on 26.11.2025.
 //
 
 import Foundation
 
-public enum WeatherError: Error, Sendable, Equatable {
+public enum SearchError: Error, Sendable, Equatable {
     case networkUnavailable
-    case invalidRequest
     case invalidAPIKey
     case rateLimited
+    case noResults
     case decodingFailed
-    case noWeatherData
     case serverError(statusCode: Int)
     case unknown
 }

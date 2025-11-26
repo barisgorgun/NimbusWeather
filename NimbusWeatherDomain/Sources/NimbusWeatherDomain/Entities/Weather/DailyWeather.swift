@@ -11,20 +11,17 @@ public struct DailyWeather: Sendable, Equatable {
     public let date: Date
     public let minTemp: Double
     public let maxTemp: Double
-    public let icon: String
-    public let condition: String
+    public let condition: WeatherCondition
 
     public init(
         date: Date,
         minTemp: Double,
         maxTemp: Double,
-        icon: String,
-        condition: String
+        condition: WeatherCondition
     ) {
         self.date = date
         self.minTemp = minTemp
         self.maxTemp = maxTemp
-        self.icon = icon
         self.condition = condition
     }
 }
