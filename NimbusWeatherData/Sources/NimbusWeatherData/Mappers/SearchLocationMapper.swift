@@ -14,7 +14,8 @@ public struct SearchLocationMapper {
             name: dto.name,
             country: dto.country,
             lat: dto.lat,
-            lon: dto.lon
+            lon: dto.lon,
+            state: dto.state
         )
     }
 }

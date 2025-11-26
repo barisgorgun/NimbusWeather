@@ -11,19 +11,43 @@ import CoreLocation
 
 struct HomeView: View {
     @StateObject private var viewModel: HomeViewModel
+    @StateObject private var searchViewModel: SearchViewModel
+
     @State private var permissionManager = LocationPermissionManager()
     @State private var currentCondition: String? = nil
     @State private var isShowingSettings = false
+    @State private var isSearching = false
+    @State private var searchText = ""
 
-    init(viewModel: HomeViewModel) {
-            _viewModel = StateObject(wrappedValue: viewModel)
-        }
+    init(
+        viewModel: HomeViewModel,
+        searchViewModel: SearchViewModel
+    ) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        _searchViewModel = StateObject(wrappedValue: searchViewModel)
+    }
 
     var body: some View {
         NavigationStack {
-            ZStack {
+            ZStack(alignment: .top) {
                 backgroundView
                 contentView
+                    .blur(radius: isSearching ? 12 : 0)
+                    .opacity(isSearching ? 0.4 : 1)
+                    .animation(.easeInOut(duration: 0.25), value: isSearching)
+
+                WeatherSearchContainerView(viewModel: searchViewModel, isSearching: $isSearching)
+                { selected in
+                    isSearching = false
+                    searchViewModel.query = ""
+                    Task {
+                        await viewModel.fetchWeather(lat: selected.lat, lon: selected.lon)
+                    }
+                } onLocationRequest:  {
+                    Task {
+                        await viewModel.fetchWeatherForUserLocation()
+                    }
+                }
             }
             .task { await requestPermissionAndLoad() }
             .onChange(of: viewModel.state) { _, newValue in

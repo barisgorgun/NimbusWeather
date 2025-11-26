@@ -12,11 +12,19 @@ public struct LocationSearchResult: Sendable, Equatable {
     public let country: String
     public let lat: Double
     public let lon: Double
+    public let state: String?
 
-    public init(name: String, country: String, lat: Double, lon: Double) {
+    public init(
+        name: String,
+        country: String,
+        lat: Double,
+        lon: Double,
+        state: String?
+    ) {
         self.name = name
         self.country = country
         self.lat = lat
         self.lon = lon
+        self.state = state
     }
 }

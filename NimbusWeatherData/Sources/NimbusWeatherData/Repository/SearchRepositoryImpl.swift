@@ -14,7 +14,7 @@ public final class SearchRepositoryImpl: LocationSearchRepositoryProtocol {
         self.remote = remote
     }
 
-    public func search(query: String) async throws -> [NimbusWeatherDomain.LocationSearchResult] {
+    public func search(query: String) async throws -> [LocationSearchResult] {
         do {
             let dtoList = try await remote.search(query: query)
 
