@@ -16,8 +16,6 @@ public struct CurrentWeatherMapper {
             throw WeatherError.noWeatherData
         }
 
-        let condition = conditionDTO.toDomain()
-
         return CurrentWeather(
             date: dto.dt.asDate,
             temperature: dto.temp,
@@ -27,7 +25,8 @@ public struct CurrentWeatherMapper {
             pressure: dto.pressure,
             sunrise: dto.sunrise.asDate,
             sunset: dto.sunset.asDate,
-            condition: condition
+            condition: conditionDTO.main,
+            icon: conditionDTO.icon
         )
     }
 }

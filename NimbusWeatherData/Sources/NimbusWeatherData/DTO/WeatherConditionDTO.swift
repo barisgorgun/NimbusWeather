@@ -6,6 +6,7 @@
 //
 
 import NimbusWeatherDomain
+import Foundation
 
 public struct WeatherConditionDTO: Decodable, Sendable {
     public let id: Int
@@ -15,7 +16,7 @@ public struct WeatherConditionDTO: Decodable, Sendable {
 }
 
 extension WeatherConditionDTO {
-    func toDomain() -> WeatherCondition {
-        return WeatherCondition.from(apiMain: main, description: description)
+    var iconURL: URL? {
+        URL(string: "https://openweathermap.org/img/wn/\(self.icon)@4x.png")
     }
 }

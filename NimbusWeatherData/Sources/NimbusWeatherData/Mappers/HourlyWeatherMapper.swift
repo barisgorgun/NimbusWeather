@@ -16,12 +16,11 @@ public struct HourlyWeatherMapper {
             throw WeatherError.noWeatherData
         }
 
-        let condition = conditionDTO.toDomain()
-
         return HourlyWeather(
             date: dto.dt.asDate,
             temperature: dto.temp,
-            condition: condition
+            icon: conditionDTO.icon,
+            condition: conditionDTO.main
         )
     }
 }

@@ -13,7 +13,7 @@ enum TemperatureUnit: String, CaseIterable {
     var displayName: String {
         switch self {
         case .celsius:
-            "Celsius (\(displaySembol)"
+            "Celsius (\(displaySembol))"
         case .fahrenheit:
             "Fahrenheit (\(displaySembol))"
         }

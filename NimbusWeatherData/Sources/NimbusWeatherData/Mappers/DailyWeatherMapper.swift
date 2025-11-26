@@ -17,13 +17,13 @@ public struct DailyWeatherMapper {
             throw WeatherError.noWeatherData
         }
 
-        let condition = conditionDTO.toDomain()
 
         return DailyWeather(
             date: dto.dt.asDate,
             minTemp: dto.temp.min,
             maxTemp: dto.temp.max,
-            condition: condition
+            icon: conditionDTO.icon,
+            condition: conditionDTO.main
         )
     }
 }

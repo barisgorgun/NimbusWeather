@@ -51,7 +51,7 @@ public final class APIServiceImpl: APIService {
             }
 
             do {
-                return try JSONDecoder().decode(T.self, from: data)
+                return try decoder.decode(T.self, from: data)
             } catch {
                 throw APIError.decodingError
             }
