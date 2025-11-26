@@ -10,20 +10,24 @@ import NimbusWeatherDomain
 
 public struct CurrentWeatherMapper {
 
-    public static func map(_ dto: CurrentWeatherDTO) -> CurrentWeather {
-        let condition = dto.weather.first
+    public static func map(_ dto: CurrentWeatherDTO) throws -> CurrentWeather {
+
+        guard let conditionDTO = dto.weather.first else {
+            throw WeatherError.noWeatherData
+        }
+
+        let condition = conditionDTO.toDomain()
 
         return CurrentWeather(
+            date: dto.dt.asDate,
             temperature: dto.temp,
-            feelsLike: dto.feels_like,
+            feelsLike: dto.feelsLike,
             humidity: dto.humidity,
-            windSpeed: dto.wind_speed,
+            windSpeed: dto.windSpeed,
             pressure: dto.pressure,
-            condition: condition?.main ?? "",
-            icon: condition?.icon ?? "",
-            date: Date(timeIntervalSince1970: dto.dt),
-            sunrise: Date(timeIntervalSince1970: dto.sunrise),
-            sunset: Date(timeIntervalSince1970: dto.sunset)
+            sunrise: dto.sunrise.asDate,
+            sunset: dto.sunset.asDate,
+            condition: condition
         )
     }
 }

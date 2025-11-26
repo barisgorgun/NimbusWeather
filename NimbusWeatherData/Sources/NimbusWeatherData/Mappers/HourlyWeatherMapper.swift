@@ -10,14 +10,18 @@ import NimbusWeatherDomain
 
 public struct HourlyWeatherMapper {
 
-    public static func map(_ dto: HourlyWeatherDTO) -> HourlyWeather {
-        let condition = dto.weather.first
+    public static func map(_ dto: HourlyWeatherDTO) throws -> HourlyWeather {
+
+        guard let conditionDTO = dto.weather.first else {
+            throw WeatherError.noWeatherData
+        }
+
+        let condition = conditionDTO.toDomain()
 
         return HourlyWeather(
-            date: Date(timeIntervalSince1970: dto.dt),
+            date: dto.dt.asDate,
             temperature: dto.temp,
-            icon: condition?.icon ?? "",
-            condition: condition?.main ?? ""
+            condition: condition
         )
     }
 }

@@ -8,8 +8,16 @@
 import Foundation
 
 public final class APIServiceImpl: APIService {
+    private let session: URLSession
+    private let decoder: JSONDecoder
 
-    public init() { }
+    public init(session: URLSession = .shared) {
+        self.session = session
+
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        self.decoder = decoder
+    }
 
     public func request<T>(_ endpoint: any Endpoint) async throws -> T where T : Decodable {
 
@@ -18,11 +26,12 @@ public final class APIServiceImpl: APIService {
         }
 
         var request = URLRequest(url: url)
-        request.httpMethod = endpoint.method
+        request.httpMethod = endpoint.method.rawValue
+        request.timeoutInterval = 15
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
         do {
-            let (data, response) = try await URLSession.shared.data(for: request)
+            let (data, response) = try await session.data(for: request)
 
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw APIError.invalidResponse

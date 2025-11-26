@@ -10,9 +10,9 @@ import Foundation
 public struct CurrentWeatherDTO: Decodable, Sendable {
     public let dt: Double
     public let temp: Double
-    public let feels_like: Double
+    public let feelsLike: Double
     public let humidity: Int
-    public let wind_speed: Double
+    public let windSpeed: Double
     public let pressure: Int
     public let sunrise: Double
     public let sunset: Double

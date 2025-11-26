@@ -11,15 +11,19 @@ import NimbusWeatherDomain
 
 public struct DailyWeatherMapper {
 
-    public static func map(_ dto: DailyWeatherDTO) -> DailyWeather {
-        let condition = dto.weather.first
+    public static func map(_ dto: DailyWeatherDTO) throws -> DailyWeather {
+
+        guard let conditionDTO = dto.weather.first else {
+            throw WeatherError.noWeatherData
+        }
+
+        let condition = conditionDTO.toDomain()
 
         return DailyWeather(
-            date: Date(timeIntervalSince1970: dto.dt),
+            date: dto.dt.asDate,
             minTemp: dto.temp.min,
             maxTemp: dto.temp.max,
-            icon: condition?.icon ?? "",
-            condition: condition?.main ?? ""
+            condition: condition
         )
     }
 }

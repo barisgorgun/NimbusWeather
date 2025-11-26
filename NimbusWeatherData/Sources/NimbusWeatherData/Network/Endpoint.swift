@@ -10,12 +10,11 @@ import Foundation
 public protocol Endpoint {
     var baseURL: String { get }
     var path: String { get }
-    var method: String { get }
+    var method: HTTPMethod { get }
     var queryItems: [URLQueryItem] { get }
 }
 
 public extension Endpoint {
-    
     func makeURL() -> URL? {
         var components = URLComponents(string: baseURL + path)
         components?.queryItems = queryItems
