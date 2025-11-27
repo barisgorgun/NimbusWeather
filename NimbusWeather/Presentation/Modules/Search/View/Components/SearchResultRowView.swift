@@ -8,64 +8,40 @@
 import SwiftUI
 
 struct SearchResultRowView: View {
-    let name: String
-    let state: String?
-    let country: String
-    let onSelect: () -> Void
+    let result: SearchResultUIModel
 
     var body: some View {
-        HStack(spacing: 16) {
-            Image(systemName: "cloud.sun.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 60, height: 60)
-                .foregroundStyle(
-                    LinearGradient(
-                        colors: [.white.opacity(0.9), .white.opacity(0.6)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .shadow(color: .black.opacity(0.15), radius: 10, y: 6)
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(alignment: .center) {
+                Text(result.name)
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(.white)
 
-            VStack(alignment: .leading, spacing: 4) {
-                HStack(alignment: .center, spacing: 0) {
-                    Text(name)
-                        .font(.title3.bold())
-                        .foregroundColor(.white)
-
-                    if let state = state {
-                        Text(", \(state)")
-                            .font(.title3.bold())
-                            .foregroundColor(.white)
-                    }
+                if let state = result.state {
+                    Text(", \(state)")
+                        .font(.system(size: 14))
+                        .foregroundColor(.white.opacity(0.6))
                 }
-
-                Text(country)
-                    .font(.subheadline)
-                    .foregroundColor(.white.opacity(0.85))
             }
-            Spacer()
+
+            Text(result.country)
+                .font(.system(size: 14))
+                .foregroundColor(.white.opacity(0.6))
         }
-        .padding()
-        .background(
-            LinearGradient(
-                colors: [
-                    Color(red: 0.47, green: 0.72, blue: 1.0).opacity(0.8),
-                    Color(red: 0.65, green: 0.52, blue: 1.0).opacity(0.8)
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 10)
+        .padding(.horizontal, 4)
+        .background(Color.clear)
+        .overlay(
+            Rectangle()
+                .fill(Color.white.opacity(0.12))
+                .frame(height: 0.5),
+            alignment: .bottom
         )
-        .cornerRadius(22)
-        .shadow(color: .black.opacity(0.25), radius: 20, y: 12)
-        .onTapGesture {
-            onSelect()
-        }
     }
 }
 
+
 #Preview {
-    SearchResultRowView(name: "Berlin", state: "New Hampshire", country: "Turkey", onSelect: { })
+    SearchResultRowView(result: SearchResultUIModel(name: "Darica", country: "Tr", lat: 20.121, lon: 32.123, state: nil))
 }

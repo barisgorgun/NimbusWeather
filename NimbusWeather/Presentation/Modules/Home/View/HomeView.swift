@@ -13,18 +13,20 @@ struct HomeView: View {
     @StateObject private var viewModel: HomeViewModel
     @StateObject private var searchViewModel: SearchViewModel
 
-    @State private var permissionManager = LocationPermissionManager()
-    @State private var currentCondition: String? = nil
     @State private var isShowingSettings = false
     @State private var isSearching = false
-    @State private var searchText = ""
+
+    private let diContainer: DIContainer
+    private let permissionManager = LocationPermissionManager()
 
     init(
         viewModel: HomeViewModel,
-        searchViewModel: SearchViewModel
+        searchViewModel: SearchViewModel,
+        diContainer: DIContainer
     ) {
         _viewModel = StateObject(wrappedValue: viewModel)
         _searchViewModel = StateObject(wrappedValue: searchViewModel)
+        self.diContainer = diContainer
     }
 
     var body: some View {
@@ -35,26 +37,37 @@ struct HomeView: View {
                     .blur(radius: isSearching ? 12 : 0)
                     .opacity(isSearching ? 0.4 : 1)
                     .animation(.easeInOut(duration: 0.25), value: isSearching)
-
-                WeatherSearchContainerView(viewModel: searchViewModel, isSearching: $isSearching)
-                { selected in
-                    isSearching = false
-                    searchViewModel.query = ""
-                    Task {
-                        await viewModel.fetchWeather(lat: selected.lat, lon: selected.lon)
+            }
+            .overlay(alignment: .bottom) {
+                if !isSearching {
+                    SearchTriggerBarView(
+                        onTapSearch: {
+                            withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                                isSearching = true
+                            }
+                        },
+                        onLocationRequest: {
+                            Task { await viewModel.fetchWeatherForUserLocation() }
+                        }
+                    )
+                    .padding(.bottom, 32)
+                }
+            }
+            .overlay(alignment: .top) {
+                if isSearching {
+                    WeatherSearchContainerView(
+                        viewModel: searchViewModel,
+                        diContainer: diContainer,
+                        isSearching: $isSearching
+                    ) {
+                        Task { await viewModel.fetchWeatherForUserLocation() }
                     }
-                } onLocationRequest:  {
-                    Task {
-                        await viewModel.fetchWeatherForUserLocation()
-                    }
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
             }
             .task { await requestPermissionAndLoad() }
-            .onChange(of: viewModel.state) { _, newValue in
-                updateBackground(for: newValue)
-            }
             .toolbar {
-              settingsButton
+                settingsButton
             }
         }
         .sheet(isPresented: $isShowingSettings) {
@@ -66,7 +79,7 @@ struct HomeView: View {
 extension HomeView {
     @ViewBuilder
     private var backgroundView: some View {
-        if let condition = currentCondition {
+        if let condition = viewModel.currentCondition {
             DynamicWeatherBackgroundView(condition: condition)
                 .ignoresSafeArea()
         } else {
@@ -99,7 +112,7 @@ extension HomeView {
                 ProgressView("Updating Weather…")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .loaded(let uiModel):
-                loadedView(uiModel)
+                WeatherOverviewView(uiModel: uiModel)
                     .transition(.opacity.combined(with: .scale))
             case .error(let message):
                 WeatherErrorView(message: message) {
@@ -111,44 +124,6 @@ extension HomeView {
 }
 
 extension HomeView {
-
-    private func loadedView(_ uiModel: HomeUIModel) -> some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: 28) {
-                HomeHeaderView(
-                    location: uiModel.cityName,
-                    condition: uiModel.current.condition,
-                    date: Date()
-                )
-
-                CurrentWeatherCardView(model: uiModel.current)
-
-                MetricsGridView(
-                    humidity: uiModel.current.humidity,
-                    wind: uiModel.current.windSpeed,
-                    pressure: uiModel.current.pressure,
-                    feelsLikeValue: uiModel.current.feelsLikeValue
-                )
-
-                HourlyForecastScrollView(items: uiModel.hourly)
-
-                DailyForecastListView(items: uiModel.daily)
-            }
-            .padding(.horizontal, 16)
-            .padding(.top, 24)
-            .padding(.bottom, 32)
-        }
-    }
-
-    private func updateBackground(for state: HomeState) {
-        guard case .loaded(let uiModel) = state else {
-            return
-        }
-
-        withAnimation(.easeInOut(duration: 0.6)) {
-            currentCondition = uiModel.current.condition
-        }
-    }
 
     private func requestPermissionAndLoad() async {
         let status = await permissionManager.requestPermission()

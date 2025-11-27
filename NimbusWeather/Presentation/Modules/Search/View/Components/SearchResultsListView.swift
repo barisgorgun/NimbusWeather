@@ -13,16 +13,20 @@ struct SearchResultsListView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 16) {
-                ForEach(items) { item in
-                    SearchResultRowView(name: item.name, state: item.state, country: item.country) {
+            LazyVStack(alignment: .leading, spacing: 0) {
+                ForEach(Array(items.enumerated()), id: \.offset) { _, item in
+                    Button {
                         onSelect(item)
+                    } label: {
+                        SearchResultRowView(result: item)
+                            .contentShape(Rectangle())
                     }
+                    .buttonStyle(.plain)
+                    .padding(.horizontal, 20)
                 }
             }
-            .padding(.horizontal)
             .padding(.top, 12)
-            .padding(.bottom, 40)
+            .padding(.bottom, 8)
         }
     }
 }

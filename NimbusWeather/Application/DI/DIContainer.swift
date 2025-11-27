@@ -62,4 +62,13 @@ final class DIContainer {
     func makeSearchViewModel() -> SearchViewModel {
         SearchViewModel(searchUseCase: searchLocationUseCase)
     }
+
+    func makeDetailViewModel(lat: Double, lon: Double) -> WeatherDetailViewModel {
+        WeatherDetailViewModel(
+            weatherUseCase: getWeatherUseCase,
+            locationService: locationService,
+            lat: lat,
+            lon: lon
+        )
+    }
 }

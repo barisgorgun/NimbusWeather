@@ -1,8 +1,8 @@
 //
-//  HomeViewModel.swift
+//  WeatherDetailViewModel.swift
 //  NimbusWeather
 //
-//  Created by Gorgun, Baris on 20.11.2025.
+//  Created by Gorgun, Baris on 27.11.2025.
 //
 
 import Foundation
@@ -11,44 +11,35 @@ import Combine
 import CoreLocation
 
 @MainActor
-final class HomeViewModel: ObservableObject {
-
+final class WeatherDetailViewModel: ObservableObject {
     @Published var state: HomeState = .idle
     @Published var currentCondition: String?
 
     private let weatherUseCase: GetWeatherUseCaseProtocol
     private let locationService: LocationServiceProtocol
-    private let locationProvider: UserLocationProviderProtocol
+    private let lat: Double
+    private let lon: Double
 
     init(
         weatherUseCase: GetWeatherUseCaseProtocol,
         locationService: LocationServiceProtocol,
-        locationProvider: UserLocationProviderProtocol
+        lat: Double,
+        lon: Double
     ) {
         self.weatherUseCase = weatherUseCase
         self.locationService = locationService
-        self.locationProvider = locationProvider
+        self.lat = lat
+        self.lon = lon
     }
 
-    func fetchWeather(lat: Double, lon: Double) async {
+    func fetchWeather() async {
         await loadWeather(lat: lat, lon: lon)
-    }
-
-    func fetchWeatherForUserLocation() async {
-        state = .loading
-
-        do {
-            let coordinate = try await locationProvider.getLocation()
-            await loadWeather(lat: coordinate.latitude, lon: coordinate.longitude)
-        } catch {
-            state = .error("Konum alınamadı")
-        }
     }
 }
 
 // MARK: - Private funcs
 
-private extension HomeViewModel {
+private extension WeatherDetailViewModel {
 
     func loadWeather(lat: Double, lon: Double) async {
         do {
