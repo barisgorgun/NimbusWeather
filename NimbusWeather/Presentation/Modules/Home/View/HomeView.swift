@@ -15,6 +15,7 @@ struct HomeView: View {
 
     @State private var isShowingSettings = false
     @State private var isSearching = false
+    @State private var isShowingLocationList = false
 
     private let diContainer: DIContainer
     private let permissionManager = LocationPermissionManager()
@@ -31,25 +32,33 @@ struct HomeView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .top) {
+            ZStack {
                 backgroundView
                 contentView
                     .blur(radius: isSearching ? 12 : 0)
                     .opacity(isSearching ? 0.4 : 1)
                     .animation(.easeInOut(duration: 0.25), value: isSearching)
+
+                if isShowingLocationList {
+                    ZStack {
+                        LocationListView()
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                    }
+                }
             }
             .overlay(alignment: .bottom) {
-                if !isSearching {
+                if !isSearching && !isShowingLocationList {
                     SearchTriggerBarView(
                         onTapSearch: {
                             withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
                                 isSearching = true
                             }
-                        },
-                        onLocationRequest: {
-                            Task { await viewModel.fetchWeatherForUserLocation() }
                         }
-                    )
+                    ) {
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                            isShowingLocationList = true
+                        }
+                    }
                     .padding(.bottom, 32)
                 }
             }
@@ -67,7 +76,6 @@ struct HomeView: View {
             }
             .task { await requestPermissionAndLoad() }
             .toolbar {
-                settingsButton
                 ToolbarCircleButton(systemName: "gearshape.fill") {
                     isShowingSettings = true
                 }
@@ -76,6 +84,7 @@ struct HomeView: View {
         .sheet(isPresented: $isShowingSettings) {
             SettingsView()
         }
+        .animation(.spring(response: 0.35, dampingFraction: 0.85), value: isShowingLocationList)
     }
 }
 
@@ -99,7 +108,9 @@ extension HomeView {
                 ProgressView("Updating Weather…")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .loaded(let uiModel):
-                WeatherOverviewView(uiModel: uiModel)
+                WeatherOverviewView(uiModel: uiModel) {
+                    Task { await viewModel.fetchWeatherForUserLocation() }
+                }
                     .transition(.opacity.combined(with: .scale))
             case .error(let message):
                 WeatherErrorView(message: message) {

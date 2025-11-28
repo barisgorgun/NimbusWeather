@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchTriggerBarView: View {
     var onTapSearch: () -> Void
-    var onLocationRequest: () -> Void
+    var listBulletClicked: () -> Void
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
@@ -23,17 +23,26 @@ struct SearchTriggerBarView: View {
             .padding()
             .background(.ultraThinMaterial)
             .cornerRadius(14)
+            .overlay(
+                RoundedRectangle(cornerRadius: 14)
+                    .stroke(Color.cyan.opacity(0.35), lineWidth: 1.2)
+            )
             .onTapGesture { onTapSearch() }
 
             Button {
-                onLocationRequest()
+                listBulletClicked()
             } label: {
-                Image(systemName: "location.fill")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(.blue)
-                    .padding(12)
+                Image(systemName: "list.bullet")
+                    .font(.system(size: 22, weight: .semibold))
+                    .symbolRenderingMode(.monochrome)
+                    .foregroundColor(.white)
+                    .frame(width: 54, height: 54)
                     .background(.ultraThinMaterial)
                     .clipShape(Circle())
+                    .overlay(
+                        Circle()
+                            .stroke(Color.cyan.opacity(0.35), lineWidth: 1.2)
+                    )
             }
         }
         .padding(.horizontal, 16)
@@ -46,6 +55,7 @@ struct SearchTriggerBarView: View {
         )
     }
 }
+
 #Preview {
-    SearchTriggerBarView(onTapSearch: {}, onLocationRequest: {})
+    SearchTriggerBarView(onTapSearch: {}, listBulletClicked: {})
 }
