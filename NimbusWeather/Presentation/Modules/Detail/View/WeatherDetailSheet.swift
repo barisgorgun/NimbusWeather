@@ -22,40 +22,20 @@ struct WeatherDetailSheet: View {
                 contentView
             }
             .toolbar {
-                dismissButton
-                addButton
+                ToolbarItem(placement: .topBarLeading) {
+                    ToolbarCircleButton(systemName: "xmark") {
+                        dismiss()
+                    }
+                }
+
+                ToolbarItem(placement: .topBarTrailing) {
+                    ToolbarCircleButton(systemName: "plus") {
+                        // will be added action
+                    }
+                }
             }
         }
         .task { await viewModel.fetchWeather() }
-    }
-}
-
-extension WeatherDetailSheet {
-    @ToolbarContentBuilder
-    private var addButton: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            Button {
-                // will be added action
-            } label: {
-                Image(systemName: "plus")
-                    .font(.system(size: 20, weight: .semibold))
-                    .foregroundColor(.white)
-                    .symbolRenderingMode(.hierarchical)
-            }
-        }
-    }
-
-    private var dismissButton: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            Button {
-                dismiss()
-            } label: {
-                Image(systemName: "xmark")
-                    .font(.system(size: 20, weight: .semibold))
-                    .foregroundColor(.white)
-                    .symbolRenderingMode(.hierarchical)
-            }
-        }
     }
 }
 

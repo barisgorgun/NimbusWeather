@@ -68,6 +68,9 @@ struct HomeView: View {
             .task { await requestPermissionAndLoad() }
             .toolbar {
                 settingsButton
+                ToolbarCircleButton(systemName: "gearshape.fill") {
+                    isShowingSettings = true
+                }
             }
         }
         .sheet(isPresented: $isShowingSettings) {
@@ -84,22 +87,6 @@ extension HomeView {
                 .ignoresSafeArea()
         } else {
             Color.black.ignoresSafeArea()
-        }
-    }
-}
-
-extension HomeView {
-    @ToolbarContentBuilder
-    private var settingsButton: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            Button {
-                isShowingSettings = true
-            } label: {
-                Image(systemName: "gearshape.fill")
-                    .font(.system(size: 20, weight: .semibold))
-                    .foregroundColor(.white)
-                    .symbolRenderingMode(.hierarchical)
-            }
         }
     }
 }
