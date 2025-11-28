@@ -59,8 +59,8 @@ extension WeatherDetailSheet {
                 ProgressView("Updating Weather…")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .loaded(let uiModel):
-                WeatherOverviewView(uiModel: uiModel)
-                    .transition(.opacity.combined(with: .scale))
+                WeatherOverviewView(uiModel: uiModel, showLocationButton: false) { }
+                     .transition(.opacity.combined(with: .scale))
             case .error(let message):
                 WeatherErrorView(message: message) {
                     Task { await viewModel.fetchWeather() }

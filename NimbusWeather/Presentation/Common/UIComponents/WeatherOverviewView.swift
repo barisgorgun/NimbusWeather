@@ -9,6 +9,8 @@ import SwiftUI
 
 struct WeatherOverviewView: View {
     let uiModel: WeatherUIModel
+    var showLocationButton: Bool = true
+    var onLocationRequest: () -> Void
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -16,7 +18,9 @@ struct WeatherOverviewView: View {
                 HomeHeaderView(
                     location: uiModel.cityName,
                     condition: uiModel.current.condition,
-                    date: Date()
+                    date: Date(),
+                    onLocationRequest: onLocationRequest,
+                    showLocationButton: showLocationButton
                 )
 
                 CurrentWeatherCardView(model: uiModel.current)
@@ -69,5 +73,5 @@ struct WeatherOverviewView: View {
         ]
     )
 
-    WeatherOverviewView(uiModel: mockWeatherUIModel)
+    WeatherOverviewView(uiModel: mockWeatherUIModel, onLocationRequest: { })
 }
