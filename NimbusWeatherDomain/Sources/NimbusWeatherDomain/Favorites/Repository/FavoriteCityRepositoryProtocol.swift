@@ -7,9 +7,8 @@
 
 import Foundation
 
-public protocol FavoriteCityRepository {
-    func loadFavorites() async throws -> [FavoriteCity]
-    func saveFavorites(_ favorites: [FavoriteCity]) async throws
+public protocol FavoriteCityRepositoryProtocol: Sendable {
+    func getFavoriteCities() async throws -> [FavoriteCity]
     func addFavorite(_ city: FavoriteCity) async throws
     func removeFavorite(id: UUID) async throws
 }

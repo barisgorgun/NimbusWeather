@@ -13,22 +13,28 @@ final class DIContainer {
 
     // MARK: - Services
 
-        let apiService: APIService
-        let weatherRemoteDataSource: WeatherRemoteDataSourceProtocol
-        let searchRemoteDataSource: SearchRemoteDataSourceProtocol
-        let locationService: LocationServiceProtocol
-        let locationProvider: UserLocationProviderProtocol
+    let apiService: APIService
+    let weatherRemoteDataSource: WeatherRemoteDataSourceProtocol
+    let searchRemoteDataSource: SearchRemoteDataSourceProtocol
+    let locationService: LocationServiceProtocol
+    let locationProvider: UserLocationProviderProtocol
 
     // MARK: - Repositories
 
-        let weatherRepository: WeatherRepositoryProtocol
-        let searchRepository: LocationSearchRepositoryProtocol
+    let weatherRepository: WeatherRepositoryProtocol
+    let searchRepository: LocationSearchRepositoryProtocol
+    let favoriteCityRepository: FavoriteCityRepositoryProtocol
 
-        // MARK: - Use Cases
-    
-        let getWeatherUseCase: GetWeatherUseCaseProtocol
-        let searchLocationUseCase: SearchLocationsUseCaseProtocol
+    // MARK: - Use Cases
 
+    let getWeatherUseCase: GetWeatherUseCaseProtocol
+    let searchLocationUseCase: SearchLocationsUseCaseProtocol
+    let addFavoriteUseCase: AddFavoriteCityUseCaseProtocol
+    let removeFavoriteUseCase: RemoveFavoriteCityUseCaseProtocol
+    let loadFavoriteCitiesWeatherUseCase: LoadFavoriteCitiesWeatherUseCaseProtocol
+
+    // MARK: - Storage
+    private let favoriteCityStorage: FavoriteCityStorageProtocol
 
     // MARK: - Initialization
 
@@ -49,8 +55,14 @@ final class DIContainer {
         self.searchRemoteDataSource = searchRemoteDataSource
         self.searchRepository = SearchRepositoryImpl(remote: searchRemoteDataSource)
         self.searchLocationUseCase = SearchLocationsUseCase(searchRepository: searchRepository)
+
+        self.favoriteCityStorage = FavoriteCityStorage()
+        self.favoriteCityRepository = FavoriteCityRepositoryImpl(storage: favoriteCityStorage)
+        self.addFavoriteUseCase = AddFavoriteCityUseCase(repository: favoriteCityRepository)
+        self.removeFavoriteUseCase = RemoveFavoriteCityUseCase(repository: favoriteCityRepository)
+        self.loadFavoriteCitiesWeatherUseCase = LoadFavoriteCitiesWeatherUseCase(repository: favoriteCityRepository, weatherService: weatherRepository)
     }
-    
+
     func makeHomeViewModel() -> HomeViewModel {
         HomeViewModel(
             weatherUseCase: getWeatherUseCase,

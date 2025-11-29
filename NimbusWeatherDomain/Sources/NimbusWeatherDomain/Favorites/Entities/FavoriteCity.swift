@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct FavoriteCity: Identifiable, Codable, Equatable {
+public struct FavoriteCity: Identifiable, Codable, Equatable, Sendable {
     public let id: UUID
     public var name: String
     public var latitude: Double
