@@ -89,7 +89,7 @@ extension WeatherDetailSheet {
                 .frame(width: 120, height: 120)
                 .overlay(
                     Circle()
-                        .stroke(Color.green.opacity(0.6), lineWidth: 3)
+                        .stroke(Color.cyan.opacity(0.6), lineWidth: 3)
                 )
                 .shadow(radius: 15)
 

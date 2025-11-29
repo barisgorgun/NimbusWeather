@@ -10,6 +10,7 @@ import NimbusWeatherDomain
 
 struct WeatherUIModel: Equatable {
     let cityName: String
+    let timezone: String
     let current: CurrentWeatherUIModel
     let hourly: [HourlyWeatherUIModel]
     let daily: [DailyWeatherUIModel]

@@ -25,3 +25,12 @@ public struct HourlyWeather: Sendable, Equatable {
         self.condition = condition
     }
 }
+
+public extension HourlyWeather {
+    func formattedHour(in timezone: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        formatter.timeZone = TimeZone(identifier: timezone) ?? .current
+        return formatter.string(from: date)
+    }
+}

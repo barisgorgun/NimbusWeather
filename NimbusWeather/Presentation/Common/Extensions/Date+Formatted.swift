@@ -8,11 +8,17 @@
 import Foundation
 
 extension Date {
-    var formattedDateTime: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE, HH:mm" // Tuesday, 14:20
-        return formatter.string(from: self)
-    }
+
+    func formattedDateTimeInTimezone(_ timezone: String) -> String {
+          let formatter = DateFormatter()
+          formatter.dateFormat = "EEEE, HH:mm"
+
+          if let tz = TimeZone(identifier: timezone) {
+              formatter.timeZone = tz
+          }
+
+          return formatter.string(from: self)
+      }
 
     func formattedTime(timezone: String) -> String {
         guard let tz = TimeZone(identifier: timezone) else {

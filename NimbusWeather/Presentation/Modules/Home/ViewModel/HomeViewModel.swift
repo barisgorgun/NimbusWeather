@@ -70,6 +70,7 @@ private extension HomeViewModel {
     func buildUIModel(from weather: Weather, cityName: String) -> WeatherUIModel {
         WeatherUIModel(
             cityName: cityName,
+            timezone: weather.timezone,
             current: buildCurrentUI(from: weather),
             hourly: buildHourlyUI(from: weather),
             daily: buildDailyUI(from: weather)
@@ -93,7 +94,7 @@ private extension HomeViewModel {
     func buildHourlyUI(from weather: Weather) -> [HourlyWeatherUIModel] {
         weather.hourly.prefix(12).map {
             HourlyWeatherUIModel(
-                hour: $0.formattedHour,
+                hour: $0.formattedHour(in: weather.timezone),
                 temperature: $0.temperature,
                 icon: $0.icon
             )

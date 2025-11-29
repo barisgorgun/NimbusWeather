@@ -18,7 +18,7 @@ struct WeatherOverviewView: View {
                 HomeHeaderView(
                     location: uiModel.cityName,
                     condition: uiModel.current.condition,
-                    date: Date(),
+                    date: Date().formattedDateTimeInTimezone(uiModel.timezone),
                     onLocationRequest: onLocationRequest,
                     showLocationButton: showLocationButton
                 )
@@ -46,6 +46,7 @@ struct WeatherOverviewView: View {
 #Preview {
     let mockWeatherUIModel = WeatherUIModel(
         cityName: "Istanbul",
+        timezone: "",
         current: CurrentWeatherUIModel(
             temperature: 24,
             condition: "Partly Cloudy",
