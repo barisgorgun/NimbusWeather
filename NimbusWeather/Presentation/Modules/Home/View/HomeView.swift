@@ -41,8 +41,15 @@ struct HomeView: View {
 
                 if isShowingLocationList {
                     ZStack {
-                        LocationListView()
-                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                        LocationListView(viewModel: diContainer.makeLocationListViewModel()) { selectedCity in
+                            withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                                isShowingLocationList = false
+                            }
+
+                            Task { await viewModel.fetchWeather(lat: selectedCity.lat, lon: selectedCity.lon)}
+                            
+                        }
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
                     }
                 }
             }

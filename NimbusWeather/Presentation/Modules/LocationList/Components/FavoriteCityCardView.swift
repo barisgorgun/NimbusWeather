@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct FavoriteCityCardView: View {
+    @AppStorage("unit") private var unit: TemperatureUnit = .celsius
     let model: FavoriteCityUIModel
 
     var body: some View {
@@ -40,16 +41,16 @@ struct FavoriteCityCardView: View {
                 Spacer()
 
                 VStack(alignment: .trailing, spacing: 6) {
-                    Text(model.temperature)
+                    Text(model.temperature.formattedTemperature(unit: unit))
                         .font(.system(size: 48, weight: .semibold))
                         .foregroundColor(.white)
 
                     HStack(spacing: 8) {
-                        Text(model.high)
+                        Text("H:\(model.high.formattedTemperature(unit: unit))")
                             .foregroundColor(.white.opacity(0.9))
                             .font(.subheadline)
 
-                        Text(model.low)
+                        Text("L:\(model.low.formattedTemperature(unit: unit))")
                             .foregroundColor(.white.opacity(0.7))
                             .font(.subheadline)
                     }
@@ -66,12 +67,15 @@ struct FavoriteCityCardView: View {
 
 #Preview {
     let mock = FavoriteCityUIModel(
+        id: UUID(),
+        lat: 10,
+        lon: 20,
         city: "Kocaeli",
         time: "16:12",
         condition: "Mostly Sunny",
-        temperature: "18°",
-        high: "H:19°",
-        low: "L:11°",
+        temperature: 18,
+        high: 19,
+        low: 11,
         backgroundImage: "cloudyBackground"
     )
 

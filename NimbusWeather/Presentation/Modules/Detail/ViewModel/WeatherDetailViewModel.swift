@@ -14,26 +14,45 @@ import CoreLocation
 final class WeatherDetailViewModel: ObservableObject {
     @Published var state: HomeState = .idle
     @Published var currentCondition: String?
+    @Published var isAddSuccess: Bool = false
 
     private let weatherUseCase: GetWeatherUseCaseProtocol
     private let locationService: LocationServiceProtocol
+    private let addFavoriteCityUseCase: AddFavoriteCityUseCaseProtocol
     private let lat: Double
     private let lon: Double
+    private var resolvedName = ""
 
     init(
         weatherUseCase: GetWeatherUseCaseProtocol,
         locationService: LocationServiceProtocol,
+        addFavoriteCityUseCase: AddFavoriteCityUseCaseProtocol,
         lat: Double,
         lon: Double
     ) {
         self.weatherUseCase = weatherUseCase
         self.locationService = locationService
+        self.addFavoriteCityUseCase = addFavoriteCityUseCase
         self.lat = lat
         self.lon = lon
     }
 
     func fetchWeather() async {
         await loadWeather(lat: lat, lon: lon)
+    }
+
+    func addFavoriteCity() async {
+        do {
+            let favoriteCity = FavoriteCity(
+                name: resolvedName,
+                latitude: lat,
+                longitude: lon
+            )
+            try await addFavoriteCityUseCase.execute(favoriteCity)
+            isAddSuccess = true
+        } catch {
+            print("Failed to add favorite city")
+        }
     }
 }
 
@@ -46,7 +65,7 @@ private extension WeatherDetailViewModel {
             let weather = try await weatherUseCase.execute(lat: lat, lon: lon)
 
             let cityName = await locationService.resolveCityName(lat: lat, lon: lon)
-            let resolvedName = cityName ?? "Current Location"
+            resolvedName = cityName ?? "Current Location"
             currentCondition = weather.current.condition
 
             let uiModel = buildUIModel(from: weather, cityName: resolvedName)

@@ -8,111 +8,88 @@
 import SwiftUI
 
 struct LocationListView: View {
-    let mockCities: [FavoriteCityUIModel] = [
+    @StateObject var viewModel: LocationListViewModel
+    let onCitySelected: (FavoriteCityUIModel) -> Void
 
-        FavoriteCityUIModel(
-            city: "Kocaeli",
-            time: "16:12",
-            condition: "Mostly Sunny",
-            temperature: "18°",
-            high: "H:19°",
-            low: "L:11°",
-            backgroundImage: "clear_bg"
-        ),
-
-        FavoriteCityUIModel(
-            city: "Paris",
-            time: "15:12",
-            condition: "Thunderstorm",
-            temperature: "11°",
-            high: "H:13°",
-            low: "L:9°",
-            backgroundImage: "thunder_bg"
-        ),
-
-        FavoriteCityUIModel(
-            city: "İstanbul",
-            time: "16:12",
-            condition: "Partly Cloudy",
-            temperature: "18°",
-            high: "H:19°",
-            low: "L:13°",
-            backgroundImage: "cloudy_bg"
-        ),
-
-        FavoriteCityUIModel(
-            city: "Ankara",
-            time: "16:12",
-            condition: "Mostly Sunny",
-            temperature: "15°",
-            high: "H:15°",
-            low: "L:4°",
-            backgroundImage: "snow_bg"
-        ),
-
-        FavoriteCityUIModel(
-            city: "Berlin",
-            time: "14:12",
-            condition: "Cloudy",
-            temperature: "7°",
-            high: "H:8°",
-            low: "L:4°",
-            backgroundImage: "overcast_bg"
-        ),
-
-        FavoriteCityUIModel(
-            city: "Bursa",
-            time: "16:12",
-            condition: "Mostly Sunny",
-            temperature: "18°",
-            high: "H:19°",
-            low: "L:11°",
-            backgroundImage: "night_bg"
-        ),
-
-        FavoriteCityUIModel(
-            city: "Samsun",
-            time: "16:12",
-            condition: "Rainy",
-            temperature: "10°",
-            high: "H:12°",
-            low: "L:7°",
-            backgroundImage: "rainy_bg"
-        ),
-
-        FavoriteCityUIModel(
-            city: "İzmir",
-            time: "16:12",
-            condition: "Clear",
-            temperature: "20°",
-            high: "H:21°",
-            low: "L:13°",
-            backgroundImage: "sunny_bg"
-        )
-    ]
-
+    init(viewModel: LocationListViewModel, onCitySelected: @escaping (FavoriteCityUIModel) -> Void) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        self.onCitySelected = onCitySelected
+    }
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 15) {
-                    ForEach(mockCities) { city in
-                        FavoriteCityCardView(model: city)
-                            .onTapGesture {
+            ZStack {
+                LinearGradient(
+                    colors: [
+                        Color(red: 0.05, green: 0.06, blue: 0.12),
+                        Color(red: 0.10, green: 0.12, blue: 0.20)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
 
-                            }
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.top, 12)
+                contentView
             }
-            .background(Color.black)
+            .navigationTitle("Weather")
+            .navigationBarTitleDisplayMode(.large)
         }
-        .navigationTitle("Weather")
-        .navigationBarTitleDisplayMode(.large)
+        .task {
+            await viewModel.load()
+        }
     }
 }
 
-#Preview {
-    LocationListView()
+extension LocationListView {
+    private var contentView: some View {
+        VStack(spacing: 20) {
+            switch viewModel.state {
+            case .idle, .loading:
+                ProgressView("Updating Weather…")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            case .loaded(let items):
+                favoritesList(items)
+            case .error(let message):
+                WeatherErrorView(message: message) { }
+            case .empty:
+                emptyStateView
+            }
+        }
+    }
+
+    func favoritesList(_ items: [FavoriteCityUIModel]) -> some View {
+        List {
+            ForEach(items) { item in
+                FavoriteCityCardView(model: item)
+                    .onTapGesture {
+                        onCitySelected(item)
+                    }
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+            }
+            .onDelete { index in
+                Task { await viewModel.removeFavorite(at: index) }
+            }
+        }
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+        .background(Color.clear)
+    }
+
+    var emptyStateView: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "mappin.slash")
+                .font(.system(size: 40, weight: .semibold))
+                .foregroundStyle(.white.opacity(0.7))
+
+            Text("No Favorite Cities")
+                .font(.title3.weight(.semibold))
+                .foregroundColor(.white)
+
+            Text("Add a city from the weather detail screen.")
+                .font(.subheadline)
+                .foregroundColor(.white.opacity(0.7))
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
 }

@@ -79,8 +79,16 @@ final class DIContainer {
         WeatherDetailViewModel(
             weatherUseCase: getWeatherUseCase,
             locationService: locationService,
+            addFavoriteCityUseCase: addFavoriteUseCase,
             lat: lat,
             lon: lon
+        )
+    }
+
+    func makeLocationListViewModel() -> LocationListViewModel {
+        LocationListViewModel(
+            removeFavoriteUseCase: removeFavoriteUseCase,
+            loadFavoriteCitiesWeather: loadFavoriteCitiesWeatherUseCase
         )
     }
 }

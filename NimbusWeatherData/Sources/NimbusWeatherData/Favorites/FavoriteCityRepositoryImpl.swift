@@ -15,7 +15,7 @@ public final class FavoriteCityRepositoryImpl: FavoriteCityRepositoryProtocol {
         self.storage = storage
     }
 
-    public func loadFavorites() async throws -> [FavoriteCity] {
+    public func getFavoriteCities() async throws -> [FavoriteCity] {
         await storage.load()
     }
 

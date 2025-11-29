@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol RemoveFavoriteCityUseCaseProtocol {
-    func execute(_ city: FavoriteCity) async throws
+    func execute(_ id: UUID) async throws
 }
 
 public final class RemoveFavoriteCityUseCase: RemoveFavoriteCityUseCaseProtocol {
@@ -18,7 +18,7 @@ public final class RemoveFavoriteCityUseCase: RemoveFavoriteCityUseCaseProtocol 
         self.repository = repository
     }
 
-    public func execute(_ city: FavoriteCity) async throws {
-        try await repository.removeFavorite(id: city.id)
+    public func execute(_ id: UUID) async throws {
+        try await repository.removeFavorite(id: id)
     }
 }

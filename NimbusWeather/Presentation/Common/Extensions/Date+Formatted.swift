@@ -13,4 +13,16 @@ extension Date {
         formatter.dateFormat = "EEEE, HH:mm" // Tuesday, 14:20
         return formatter.string(from: self)
     }
+
+    func formattedTime(timezone: String) -> String {
+        guard let tz = TimeZone(identifier: timezone) else {
+            return Date().formatted(date: .omitted, time: .shortened)
+        }
+
+        let formatter = DateFormatter()
+        formatter.timeZone = tz
+        formatter.dateFormat = "HH:mm"
+
+        return formatter.string(from: Date())
+    }
 }

@@ -30,9 +30,22 @@ struct WeatherDetailSheet: View {
 
                 ToolbarItem(placement: .topBarTrailing) {
                     ToolbarCircleButton(systemName: "plus") {
-                        // will be added action
+                        Task {
+                            do {
+                                await viewModel.addFavoriteCity()
+
+                                try? await Task.sleep(nanoseconds: 300_000_000)
+
+                                dismiss()
+                            }
+                        }
                     }
                 }
+            }
+        }
+        .overlay {
+            if viewModel.isAddSuccess {
+                successOverlay
             }
         }
         .task { await viewModel.fetchWeather() }
@@ -67,5 +80,23 @@ extension WeatherDetailSheet {
                 }
             }
         }
+    }
+
+    private var successOverlay: some View {
+        ZStack {
+            Circle()
+                .fill(.ultraThinMaterial)
+                .frame(width: 120, height: 120)
+                .overlay(
+                    Circle()
+                        .stroke(Color.green.opacity(0.6), lineWidth: 3)
+                )
+                .shadow(radius: 15)
+
+            Image(systemName: "checkmark")
+                .font(.system(size: 48, weight: .bold))
+                .foregroundStyle(.green)
+        }
+        .transition(.scale.combined(with: .opacity))
     }
 }

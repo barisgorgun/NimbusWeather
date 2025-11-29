@@ -17,6 +17,7 @@ public struct WeatherMapper {
         let daily = try dto.daily.map { try DailyWeatherMapper.map($0) }
 
         return Weather(
+            timezone: dto.timezone,
             current: current,
             hourly: hourly,
             daily: daily

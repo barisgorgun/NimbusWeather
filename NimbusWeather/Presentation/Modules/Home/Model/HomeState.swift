@@ -15,15 +15,6 @@ enum HomeState: Equatable {
     case error(String)
 }
 
-
-struct WeatherUIModel: Equatable {
-    let cityName: String
-    let current: CurrentWeatherUIModel
-    let hourly: [HourlyWeatherUIModel]
-    let daily: [DailyWeatherUIModel]
-}
-
-
 enum WeatherLoadingType: Equatable {
     case initial
     case condition(String)
