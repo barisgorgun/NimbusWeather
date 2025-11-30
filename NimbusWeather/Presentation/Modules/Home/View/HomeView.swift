@@ -102,7 +102,7 @@ extension HomeView {
             DynamicWeatherBackgroundView(condition: condition)
                 .ignoresSafeArea()
         } else {
-            Color.black.ignoresSafeArea()
+            SharedBackgroundView()
         }
     }
 }
@@ -112,7 +112,7 @@ extension HomeView {
         VStack(spacing: 20) {
             switch viewModel.state {
             case .idle, .loading:
-                ProgressView("Updating Weather…")
+                WindSpinnerLoadingView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .loaded(let uiModel):
                 WeatherOverviewView(uiModel: uiModel) {

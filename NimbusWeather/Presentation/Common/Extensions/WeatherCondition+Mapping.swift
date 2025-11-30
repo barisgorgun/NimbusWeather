@@ -10,6 +10,8 @@ import Foundation
 enum WeatherConditionType {
     case sunny
     case cloudy
+    case partlyCloudy
+    case overcast
     case rainy
     case snow
     case thunder
@@ -19,26 +21,46 @@ enum WeatherConditionType {
 
 extension String {
     var toWeatherConditionType: WeatherConditionType {
-        let lower = self.lowercased()
+        let c = self.lowercased()
 
-        if lower.contains("sun") || lower.contains("clear") {
-            return .sunny
-        }
-        if lower.contains("cloud") {
-            return .cloudy
-        }
-        if lower.contains("rain") {
-            return .rainy
-        }
-        if lower.contains("snow") {
-            return .snow
-        }
-        if lower.contains("thunder") {
-            return .thunder
-        }
-        if lower.contains("fog") {
+        if c.contains("mist")
+            || c.contains("fog")
+            || c.contains("haze")
+            || c.contains("smoke") {
             return .fog
         }
+
+        if c.contains("thunder") {
+            return .thunder
+        }
+
+        if c.contains("snow") {
+            return .snow
+        }
+
+        if c.contains("rain")
+            || c.contains("drizzle") {
+            return .rainy
+        }
+
+        if c.contains("overcast") {
+            return .overcast
+        }
+
+        if c.contains("broken")
+            || c.contains("scattered")
+            || c.contains("few clouds") {
+            return .partlyCloudy
+        }
+
+        if c.contains("cloud") {
+            return .cloudy
+        }
+
+        if c.contains("clear") || c.contains("sunny") {
+            return .sunny
+        }
+
         return .unknown
     }
 }

@@ -19,14 +19,19 @@ struct DynamicWeatherBackgroundView: View {
 
     var body: some View {
         switch condition.toWeatherConditionType {
+
         case .sunny:
             if colorScheme == .dark || isNightNow {
                 NightBackgroundView()
             } else {
-               SunnyBackgroundView()
+                SunnyBackgroundView()
             }
         case .cloudy:
             CloudyBackgroundView()
+        case .partlyCloudy:
+            PartlyCloudyBackgroundView()
+        case .overcast:
+            OvercastBackgroundView()
         case .rainy:
             RainBackgroundView()
         case .snow:
@@ -42,5 +47,5 @@ struct DynamicWeatherBackgroundView: View {
 }
 
 #Preview {
-    DynamicWeatherBackgroundView(condition: "snow")
+    DynamicWeatherBackgroundView(condition: "fog")
 }

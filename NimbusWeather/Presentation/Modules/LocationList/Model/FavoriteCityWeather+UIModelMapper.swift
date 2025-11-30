@@ -37,23 +37,45 @@ extension FavoriteCityWeather {
     }
 
     private func backgroundForCondition(_ condition: String) -> String {
-        switch condition.lowercased() {
-        case "clear":
-            "sunny_bg"
-        case "clouds":
-            "cloudy_bg"
-        case "rain":
-            "rainy_bg"
-        case "fog":
-            "fog_bg"
-        case "thunderstorm":
-            "storm_bg"
-        case "partly cloudy":
-            "partly_cloudy_bg"
-        case "overcast":
-            "overcast_bg"
-        default:
-            "default_bg"
+        let c = condition.lowercased()
+
+        if c.contains("mist") ||
+           c.contains("fog") ||
+           c.contains("haze") ||
+           c.contains("smoke") {
+            return "fog_bg"
         }
+
+        if c.contains("thunder") {
+            return "storm_bg"
+        }
+
+        if c.contains("rain") || c.contains("drizzle") {
+            return "rainy_bg"
+        }
+
+        if c.contains("snow") {
+            return "snow_bg"
+        }
+
+        if c.contains("overcast") {
+            return "overcast_bg"
+        }
+
+        if c.contains("broken") ||
+           c.contains("scattered") ||
+           c.contains("few clouds") {
+            return "partly_cloudy_bg"
+        }
+
+        if c.contains("cloud") {
+            return "cloudy_bg"
+        }
+
+        if c.contains("clear") {
+            return "sunny_bg"
+        }
+
+        return "default_bg"
     }
 }

@@ -19,15 +19,7 @@ struct LocationListView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                LinearGradient(
-                    colors: [
-                        Color(red: 0.05, green: 0.06, blue: 0.12),
-                        Color(red: 0.10, green: 0.12, blue: 0.20)
-                    ],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .ignoresSafeArea()
+                SharedBackgroundView()
 
                 contentView
             }

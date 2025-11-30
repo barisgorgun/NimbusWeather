@@ -23,8 +23,8 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                backgroundGradient
-                    .ignoresSafeArea()
+                SharedBackgroundView()
+                
                 List {
                     Section("Appearance") {
                         Picker("Theme", selection: $viewModel.selectedTheme) {
