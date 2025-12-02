@@ -28,6 +28,7 @@ public final class WeatherRepository: WeatherRepositoryProtocol {
             throw WeatherError.unknown
         }
     }
+    
     // MARK: - Error Mapping
 
     private func mapAPIError(_ error: APIError) -> WeatherError {
