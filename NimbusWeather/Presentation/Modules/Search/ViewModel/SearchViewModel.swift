@@ -19,6 +19,7 @@ final class SearchViewModel: ObservableObject {
     @Published var errorMessage: String? = nil
 
     // MARK: - Dependencies
+    
     private let searchUseCase: SearchLocationsUseCaseProtocol
 
     private var searchTask: Task<Void, Never>? = nil

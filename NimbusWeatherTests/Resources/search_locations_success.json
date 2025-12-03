@@ -1,0 +1,23 @@
+[
+  {
+    "name": "London",
+    "lat": 51.5072,
+    "lon": -0.1276,
+    "country": "GB",
+    "state": "England"
+  },
+  {
+    "name": "Manchester",
+    "lat": 53.4808,
+    "lon": -2.2426,
+    "country": "GB",
+    "state": "England"
+  },
+  {
+    "name": "Berlin",
+    "lat": 52.52,
+    "lon": 13.405,
+    "country": "DE",
+    "state": null
+  }
+]

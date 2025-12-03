@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct LocationSearchResult: Sendable, Equatable {
+public struct LocationSearchResult: Decodable, Sendable, Equatable {
     public let name: String
     public let country: String
     public let lat: Double
