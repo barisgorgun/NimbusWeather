@@ -30,6 +30,7 @@ public final class APIServiceImpl: APIService {
         request.timeoutInterval = 15
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
+        print("URL: \(url)")
         do {
             let (data, response) = try await session.data(for: request)
 

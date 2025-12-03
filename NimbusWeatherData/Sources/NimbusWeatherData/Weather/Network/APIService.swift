@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol APIService: Sendable {
+public protocol APIServiceProtocol: Sendable {
     func request<T: Decodable>(_ endpoint: any Endpoint) async throws -> T
 }

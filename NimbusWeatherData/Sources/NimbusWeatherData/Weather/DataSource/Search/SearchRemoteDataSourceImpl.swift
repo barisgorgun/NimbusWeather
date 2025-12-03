@@ -8,10 +8,10 @@
 import Foundation
 
 public final class SearchRemoteDataSourceImpl: SearchRemoteDataSourceProtocol {
-    private let apiService: APIService
+    private let apiService: APIServiceProtocol
     private let apiKey: String
 
-    public init(apiService: APIService, apiKey: String) {
+    public init(apiService: APIServiceProtocol, apiKey: String) {
         self.apiService = apiService
         self.apiKey = apiKey
     }
