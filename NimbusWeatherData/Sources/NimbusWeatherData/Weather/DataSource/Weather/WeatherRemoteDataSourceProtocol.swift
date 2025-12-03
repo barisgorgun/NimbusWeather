@@ -1,5 +1,5 @@
 //
-//  WeatherRemoteDataSource.swift
+//  WeatherRemoteDataSourceProtocol.swift
 //  NimbusWeatherData
 //
 //  Created by Gorgun, Baris on 26.11.2025.

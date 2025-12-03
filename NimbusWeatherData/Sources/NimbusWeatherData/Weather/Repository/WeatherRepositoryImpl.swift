@@ -9,7 +9,6 @@ import Foundation
 import NimbusWeatherDomain
 
 public final class WeatherRepository: WeatherRepositoryProtocol {
-
     private let remote: WeatherRemoteDataSourceProtocol
 
     public init(remote: WeatherRemoteDataSourceProtocol) {
