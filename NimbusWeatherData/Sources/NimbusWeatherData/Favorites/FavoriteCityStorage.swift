@@ -15,8 +15,11 @@ public protocol FavoriteCityStorageProtocol: Sendable {
 
 public actor FavoriteCityStorage: FavoriteCityStorageProtocol {
     private let key = "FAVORITE_CITIES"
+    private let userDefaults: UserDefaults
 
-    public init() { }
+    public init(userDefaults: UserDefaults = .standard) {
+        self.userDefaults = userDefaults
+    }
 
     public func load() async -> [FavoriteCity] {
         guard let data = UserDefaults.standard.data(forKey: key) else { return [] }
