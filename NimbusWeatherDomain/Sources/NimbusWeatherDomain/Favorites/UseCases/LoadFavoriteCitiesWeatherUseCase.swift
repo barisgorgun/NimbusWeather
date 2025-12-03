@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol LoadFavoriteCitiesWeatherUseCaseProtocol: Sendable {
+public protocol LoadFavoriteCitiesWeatherUseCaseProtocol {
     func execute() async throws -> [FavoriteCityWeather]
 }
 

@@ -13,7 +13,7 @@ final class DIContainer {
 
     // MARK: - Services
 
-    let apiService: APIService
+    let apiService: APIServiceProtocol
     let weatherRemoteDataSource: WeatherRemoteDataSourceProtocol
     let searchRemoteDataSource: SearchRemoteDataSourceProtocol
     let locationService: LocationServiceProtocol
@@ -39,7 +39,7 @@ final class DIContainer {
     // MARK: - Initialization
 
     init(
-        apiService: APIService,
+        apiService: APIServiceProtocol,
         weatherRemoteDataSource: WeatherRemoteDataSourceProtocol,
         searchRemoteDataSource: SearchRemoteDataSourceProtocol,
         locationService: LocationServiceProtocol,
