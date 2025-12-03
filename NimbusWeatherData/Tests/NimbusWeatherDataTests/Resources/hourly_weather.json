@@ -1,0 +1,12 @@
+{
+  "dt": 1709456400,
+  "temp": 14.2,
+  "weather": [
+    {
+      "id": 801,
+      "main": "Clouds",
+      "description": "few clouds",
+      "icon": "02d"
+    }
+  ]
+}

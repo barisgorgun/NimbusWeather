@@ -1,0 +1,15 @@
+{
+  "dt": 1709500000,
+  "temp": {
+    "min": 8.5,
+    "max": 17.3
+  },
+  "weather": [
+    {
+      "id": 500,
+      "main": "Rain",
+      "description": "light rain",
+      "icon": "10d"
+    }
+  ]
+}

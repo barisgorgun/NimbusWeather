@@ -1,0 +1,81 @@
+{
+  "lat": 41.01,
+  "lon": 28.97,
+  "timezone": "Europe/Istanbul",
+  "current": {
+    "dt": 1709452800,
+    "temp": 12.34,
+    "feels_like": 11.5,
+    "humidity": 62,
+    "wind_speed": 4.25,
+    "pressure": 1016,
+    "sunrise": 1709430000,
+    "sunset": 1709468400,
+    "weather": [
+      {
+        "id": 800,
+        "main": "Clear",
+        "description": "clear sky",
+        "icon": "01d"
+      }
+    ]
+  },
+  "hourly": [
+    {
+      "dt": 1709456400,
+      "temp": 14.2,
+      "weather": [
+        {
+          "id": 801,
+          "main": "Clouds",
+          "description": "few clouds",
+          "icon": "02d"
+        }
+      ]
+    },
+    {
+      "dt": 1709460000,
+      "temp": 15.0,
+      "weather": [
+        {
+          "id": 802,
+          "main": "Clouds",
+          "description": "scattered clouds",
+          "icon": "03d"
+        }
+      ]
+    }
+  ],
+  "daily": [
+    {
+      "dt": 1709500000,
+      "temp": {
+        "min": 8.5,
+        "max": 17.3
+      },
+      "weather": [
+        {
+          "id": 500,
+          "main": "Rain",
+          "description": "light rain",
+          "icon": "10d"
+        }
+      ]
+    },
+    {
+      "dt": 1709586400,
+      "temp": {
+        "min": 7.0,
+        "max": 16.0
+      },
+      "weather": [
+        {
+          "id": 801,
+          "main": "Clouds",
+          "description": "few clouds",
+          "icon": "02d"
+        }
+      ]
+    }
+  ]
+}

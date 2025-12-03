@@ -27,7 +27,8 @@ let package = Package(
         ),
         .testTarget(
             name: "NimbusWeatherDataTests",
-            dependencies: ["NimbusWeatherData"]
+            dependencies: ["NimbusWeatherData"],
+            resources: [.process("Resources")]
         ),
     ]
 )

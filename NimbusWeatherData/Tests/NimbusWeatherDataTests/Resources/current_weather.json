@@ -1,0 +1,18 @@
+{
+  "dt": 1709452800,
+  "temp": 12.34,
+  "feels_like": 11.5,
+  "humidity": 62,
+  "wind_speed": 4.25,
+  "pressure": 1016,
+  "sunrise": 1709430000,
+  "sunset": 1709468400,
+  "weather": [
+    {
+      "id": 800,
+      "main": "Clear",
+      "description": "clear sky",
+      "icon": "01d"
+    }
+  ]
+}

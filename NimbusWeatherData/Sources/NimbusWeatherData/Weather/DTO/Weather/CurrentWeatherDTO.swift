@@ -17,4 +17,16 @@ public struct CurrentWeatherDTO: Decodable, Sendable {
     public let sunrise: Double
     public let sunset: Double
     public let weather: [WeatherConditionDTO]
+
+    enum CodingKeys: String, CodingKey {
+        case dt
+        case temp
+        case feelsLike = "feels_like"
+        case humidity
+        case windSpeed = "wind_speed"
+        case pressure
+        case sunrise
+        case sunset
+        case weather
+    }
 }
