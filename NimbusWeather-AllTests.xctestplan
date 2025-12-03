@@ -1,0 +1,43 @@
+{
+  "configurations" : [
+    {
+      "id" : "A722EEA2-2E8C-43F2-B119-80E50F286639",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:NimbusWeather.xcodeproj",
+      "identifier" : "A832DBB22ECF0A7200690DA4",
+      "name" : "NimbusWeather"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:NimbusWeatherDomain",
+        "identifier" : "NimbusWeatherDomainTests",
+        "name" : "NimbusWeatherDomainTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:NimbusWeatherData",
+        "identifier" : "NimbusWeatherDataTests",
+        "name" : "NimbusWeatherDataTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:NimbusWeather.xcodeproj",
+        "identifier" : "A832DBBF2ECF0A7400690DA4",
+        "name" : "NimbusWeatherTests"
+      }
+    }
+  ],
+  "version" : 1
+}

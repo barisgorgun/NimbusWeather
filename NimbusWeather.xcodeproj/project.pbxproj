@@ -29,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A815510B2EE09C0400CC6167 /* NimbusWeather-AllTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "NimbusWeather-AllTests.xctestplan"; sourceTree = "<group>"; };
 		A832DBB32ECF0A7200690DA4 /* NimbusWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NimbusWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A832DBC02ECF0A7400690DA4 /* NimbusWeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NimbusWeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A832DBCA2ECF0A7400690DA4 /* NimbusWeatherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NimbusWeatherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +98,7 @@
 		A832DBAA2ECF0A7200690DA4 = {
 			isa = PBXGroup;
 			children = (
+				A815510B2EE09C0400CC6167 /* NimbusWeather-AllTests.xctestplan */,
 				A832DC032ECF0D0A00690DA4 /* NimbusWeatherData */,
 				A832DBFF2ECF0CC500690DA4 /* NimbusWeatherDomain */,
 				A832DBF92ECF0B4000690DA4 /* NimbusWeather */,

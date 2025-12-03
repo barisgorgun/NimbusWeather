@@ -4,10 +4,33 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>NimbusWeather-AllTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>NimbusWeather.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>A832DBB22ECF0A7200690DA4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A832DBBF2ECF0A7400690DA4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A832DBC92ECF0A7400690DA4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
