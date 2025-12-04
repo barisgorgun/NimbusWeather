@@ -47,5 +47,7 @@ final class LocationListViewModel: ObservableObject {
         }
 
         localCities.remove(atOffsets: offsets)
+
+        state = localCities.isEmpty ? .empty : .loaded(localCities)
     }
 }

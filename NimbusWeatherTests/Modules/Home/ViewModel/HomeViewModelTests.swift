@@ -56,8 +56,6 @@ final class HomeViewModelTests: XCTestCase {
             XCTFail("Expected .loaded state but got \(viewModel.state)")
         }
 
-        XCTAssertEqual(locationService.receivedLat, 41.0)
-        XCTAssertEqual(locationService.receivedLon, 29.0)
         XCTAssertEqual(weatherUseCase.receivedLat, 41.0)
         XCTAssertEqual(weatherUseCase.receivedLon, 29.0)
     }

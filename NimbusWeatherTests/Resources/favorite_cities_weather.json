@@ -1,0 +1,27 @@
+[
+  {
+    "city": {
+      "id": "A2F9B3E1-4F62-4EED-9C5B-D329D1893F21",
+      "name": "Istanbul",
+      "latitude": 41.01,
+      "longitude": 28.97
+    },
+    "weather": {
+      "timezone": "Europe/Istanbul",
+      "current": {
+        "date": "2024-03-03T10:00:00Z",
+        "temperature": 12.3,
+        "feels_like": 11.1,
+        "humidity": 60,
+        "wind_speed": 3.2,
+        "pressure": 1015,
+        "sunrise": "2024-03-03T05:50:00Z",
+        "sunset": "2024-03-03T17:50:00Z",
+        "condition": "Clouds",
+        "icon": "02d"
+      },
+      "hourly": [],
+      "daily": []
+    }
+  }
+]

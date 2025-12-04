@@ -22,7 +22,6 @@ public final class WeatherRepository: WeatherRepositoryProtocol {
 
         } catch let apiError as APIError {
             throw mapAPIError(apiError)
-
         } catch {
             throw WeatherError.unknown
         }
@@ -33,22 +32,17 @@ public final class WeatherRepository: WeatherRepositoryProtocol {
     private func mapAPIError(_ error: APIError) -> WeatherError {
         switch error {
         case .invalidURL, .requestFailed:
-            return .networkUnavailable
-
+            .networkUnavailable
         case .unauthorized:
-            return .invalidAPIKey
-
+            .invalidAPIKey
         case .notFound:
-            return .noWeatherData
-
+            .noWeatherData
         case .serverError:
-            return .serverError(statusCode: 500)
-
+            .serverError(statusCode: 500)
         case .decodingError, .invalidResponse:
-            return .decodingFailed
-
+            .decodingFailed
         case .unknown:
-            return .unknown
+            .unknown
         }
     }
 }

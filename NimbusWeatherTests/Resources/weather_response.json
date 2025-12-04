@@ -5,9 +5,9 @@
   "current": {
     "dt": 1709452800,
     "temp": 12.34,
-    "feels_like": 11.5,
+    "feelsLike": 11.5,
     "humidity": 62,
-    "wind_speed": 4.25,
+    "windSpeed": 4.25,
     "pressure": 1016,
     "sunrise": 1709430000,
     "sunset": 1709468400,
