@@ -11,12 +11,7 @@ import Foundation
 final class MockLocationService: LocationServiceProtocol {
     var resolvedCityName: String? = nil
 
-    private(set) var receivedLat: Double?
-    private(set) var receivedLon: Double?
-
     func resolveCityName(lat: Double, lon: Double) async -> String? {
-        receivedLat = lat
-        receivedLon = lon
-        return resolvedCityName
+        resolvedCityName
     }
 }

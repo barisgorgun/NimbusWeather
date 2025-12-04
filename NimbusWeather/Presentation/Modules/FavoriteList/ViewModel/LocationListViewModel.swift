@@ -49,5 +49,3 @@ final class LocationListViewModel: ObservableObject {
         localCities.remove(atOffsets: offsets)
     }
 }
-
-
