@@ -7,7 +7,7 @@
 
 import CoreLocation
 
-final class LocationPermissionManager: NSObject, CLLocationManagerDelegate {
+class LocationPermissionManager: NSObject, CLLocationManagerDelegate {
     private let manager = CLLocationManager()
     private var continuation: CheckedContinuation<CLAuthorizationStatus, Never>?
 

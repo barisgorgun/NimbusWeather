@@ -47,7 +47,6 @@ struct HomeView: View {
                             }
 
                             Task { await viewModel.fetchWeather(lat: selectedCity.lat, lon: selectedCity.lon)}
-                            
                         }
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                     }
