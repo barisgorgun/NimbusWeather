@@ -81,8 +81,20 @@ NimbusWeather provides **high test reliability** through:
 
 ## 📱 Screenshots
 
-*Will be added images*
+### 🎬 Home
+<img src="./Assets/Screenshots/home.png" width="300"/>
 
+### 📌 Saved Locations
+<img src="./Assets/Screenshots/favoriteCities.png" width="300"/>
+
+### 🔍 Search
+<img src="./Assets/Screenshots/search.png" width="300"/>
+
+### ⚙️ Settings
+<img src="./Assets/Screenshots/settings.png" width="300"/>
+```
+
+---
 ------------------------------------------------------------------------
 
 ## 🤝 Contributing & License
@@ -93,4 +105,4 @@ Pull requests and issues are welcome.
 
 **Developer:** [Barış Görgün](https://github.com/barisgorgun)
 
-[🇹🇷 Türkçe için tıklayın](README.tr.md)
+[🇹🇷 Türkçe için tıklayın](README-tr.md)

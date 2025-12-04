@@ -84,8 +84,20 @@ NimbusWeather **güçlü test mimarisi** ile geliştirilmiştir.
 
 ## 📱 Ekran Görüntüleri
 
-*(Uygulama ekran görüntülerini buraya eklenecektir.)*
+### 🎬 Ana Sayfa
+<img src="./Assets/Screenshots/home.png" width="300"/>
 
+### 📌 Favori Şehirler
+<img src="./Assets/Screenshots/favoriteCities.png" width="300"/>
+
+### 🔍 Arama
+<img src="./Assets/Screenshots/search.png" width="300"/>
+
+### ⚙️ Ayarlar
+<img src="./Assets/Screenshots/settings.png" width="300"/>
+```
+
+---
 ------------------------------------------------------------------------
 
 ## 🤝 Katkı ve Lisans
