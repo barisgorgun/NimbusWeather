@@ -10,6 +10,8 @@ import NimbusWeatherDomain
 import CoreLocation
 
 struct HomeView: View {
+    @EnvironmentObject var coordinator: HomeCoordinator
+
     @StateObject private var viewModel: HomeViewModel
     @StateObject private var searchViewModel: SearchViewModel
 
@@ -17,17 +19,14 @@ struct HomeView: View {
     @State private var isSearching = false
     @State private var isShowingLocationList = false
 
-    private let diContainer: DIContainer
     private let permissionManager = LocationPermissionManager()
 
     init(
         viewModel: HomeViewModel,
         searchViewModel: SearchViewModel,
-        diContainer: DIContainer
     ) {
         _viewModel = StateObject(wrappedValue: viewModel)
         _searchViewModel = StateObject(wrappedValue: searchViewModel)
-        self.diContainer = diContainer
     }
 
     var body: some View {
@@ -41,7 +40,7 @@ struct HomeView: View {
 
                 if isShowingLocationList {
                     ZStack {
-                        LocationListView(viewModel: diContainer.makeLocationListViewModel()) { selectedCity in
+                        coordinator.makeLocationListView() { selectedCity in
                             withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
                                 isShowingLocationList = false
                             }
@@ -72,7 +71,6 @@ struct HomeView: View {
                 if isSearching {
                     WeatherSearchContainerView(
                         viewModel: searchViewModel,
-                        diContainer: diContainer,
                         isSearching: $isSearching
                     ) {
                         Task { await viewModel.fetchWeatherForUserLocation() }
@@ -88,7 +86,7 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $isShowingSettings) {
-            SettingsView()
+            coordinator.makeSettingsView()
         }
         .animation(.spring(response: 0.35, dampingFraction: 0.85), value: isShowingLocationList)
     }

@@ -12,6 +12,7 @@ import NimbusWeatherData
 struct NimbusWeatherApp: App {
     @StateObject private var themeManager = AppThemeManager()
     private let container: DIContainer
+    private let coordinator: HomeCoordinator
 
     init() {
         let apiKey = Bundle.main.infoDictionary?["OPENWEATHER_API_KEY"] as? String ?? ""
@@ -27,17 +28,18 @@ struct NimbusWeatherApp: App {
             locationService: LocationService(),
             locationProvider: UserLocationProvider()
         )
+        self.coordinator = HomeCoordinator(container: container)
     }
 
     var body: some Scene {
         WindowGroup {
             HomeView(
                 viewModel: container.makeHomeViewModel(),
-                searchViewModel: container.makeSearchViewModel(),
-                diContainer: container
+                searchViewModel: container.makeSearchViewModel()
             )
-                .environmentObject(themeManager)
-                .preferredColorScheme(themeManager.currentTheme.colorScheme)
+            .environmentObject(coordinator)
+            .environmentObject(themeManager)
+            .preferredColorScheme(themeManager.currentTheme.colorScheme)
         }
     }
 }

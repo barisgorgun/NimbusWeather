@@ -11,21 +11,19 @@ struct WeatherSearchContainerView: View {
     @StateObject var viewModel: SearchViewModel
     @State private var selectedItem: SearchResultUIModel?
     @Binding var isSearching: Bool
+    @EnvironmentObject var coordinator: HomeCoordinator
     @Environment(\.colorScheme) private var colorScheme
     @FocusState private var isSearchFieldFocused: Bool
 
-    let diContainer: DIContainer
     let onLocationRequest: () -> Void
 
     init(
         viewModel: SearchViewModel,
-        diContainer: DIContainer,
         isSearching: Binding<Bool>,
         onLocationRequest: @escaping () -> Void
     ) {
         _viewModel = StateObject(wrappedValue: viewModel)
         _isSearching = isSearching
-        self.diContainer = diContainer
         self.onLocationRequest = onLocationRequest
     }
 
@@ -43,7 +41,7 @@ struct WeatherSearchContainerView: View {
             }
         }
         .sheet(item: $selectedItem) { item in
-            WeatherDetailSheet(viewModel: diContainer.makeDetailViewModel(lat: item.lat, lon: item.lon))
+            coordinator.makeWeatherDetailSheet(item: item)
         }
         
         .onAppear {
