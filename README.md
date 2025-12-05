@@ -1,34 +1,36 @@
 # 🌤️ NimbusWeather
 
-**SwiftUI · Clean Architecture · Modular SPM · MVVM · Async/Await · Full
+**SwiftUI · Clean Architecture · Modular SPM · MVVM · Async/Await · High
 Test Coverage**
 
-NimbusWeather is a modern iOS weather application built with **SwiftUI**
-and **Clean Architecture**, structured into modular **SPM packages**
-(Domain, Data, Presentation) to ensure scalability, testability, and
-maintainability.
+NimbusWeather is a modern, production-quality iOS weather application
+built using **SwiftUI** and **Clean Architecture**, structured into
+modular **SPM packages** (Domain, Data, Presentation). This ensures
+scalability, testability, and clean separation of concerns.
 
-The app uses **OpenWeather One Call 3.0 API** to deliver precise
-current, hourly, and daily forecasts with a fully responsive UI.
+The app consumes **OpenWeather One Call 3.0 API** and provides real-time
+current, hourly, and daily forecasts with a reactive and visually
+dynamic experience.
 
 ------------------------------------------------------------------------
 
 ## ✨ Features
 
--   **SwiftUI-based UI** with declarative and reactive design
--   **Clean Architecture** with Domain/Data/Presentation separation
--   **MVVM** pattern with fully tested ViewModels
--   **Modular project** using Swift Package Manager
--   **Actor-based concurrency** (Image loading, caching)
--   **Full async/await networking**
--   **Advanced error handling** and mapper layer
--   **Location-based weather fetching**
--   **Favorites system** with local persistence (UserDefaults)
--   **Theme and temperature unit settings**
--   **High test coverage:**
-    -   Domain layer
-    -   Data layer (DTO, Mapper, Repository, DataSource)
-    -   Presentation layer (ViewModels)
+-   **SwiftUI-based reactive interface**
+-   **Clean Architecture** with isolated Domain/Data/Presentation
+    layers\
+-   **MVVM with fully tested ViewModels**
+-   **Modularized using Swift Package Manager (SPM)**
+-   **Actor-based concurrency** for safe image loading and caching
+-   **Async/Await networking**, testable API layer, and DTO mapping
+-   **Location-based weather fetching** (reverse geocoding included)
+-   **Favorite cities** with persistent storage
+-   **Theme & temperature unit settings** (Celsius/Fahrenheit)
+-   **Dynamic backgrounds that change based on weather conditions** 🌦️
+-   **System Light / Dark Mode support**
+-   **Debounced search experience** for efficient API usage
+-   **High test coverage across all layers** (Domain, Data,
+    Presentation)
 
 ------------------------------------------------------------------------
 
@@ -37,32 +39,66 @@ current, hourly, and daily forecasts with a fully responsive UI.
     NimbusWeather/
      ├─ NimbusWeatherDomain/      # Entities, UseCases, Repository Interfaces
      ├─ NimbusWeatherData/        # Remote Data Source, Repository Impl, DTOs, Mappers
-     ├─ NimbusWeather/            # SwiftUI Presentation Layer (ViewModels, Views)
+     ├─ NimbusWeather/            # SwiftUI Presentation Layer (Views, ViewModels, UI Models)
      └─ Tests/                    # Full unit test coverage for all modules
+
+This architecture ensures:
+
+-   Testability of each module
+-   Independent compilation and maintenance
+-   Predictable data flow
+-   Clean dependency boundaries
 
 ------------------------------------------------------------------------
 
 ## 🧪 Test Strategy
 
-NimbusWeather provides **high test reliability** through:
+NimbusWeather is built with a **test-first mindset**, including:
 
 ### ✔ Domain Layer
 
 -   UseCase logic
--   Entities
--   Error mapping
+-   Error conversions
+-   Entity transformations
 
 ### ✔ Data Layer
 
--   All mappers tested with real JSON fixtures
--   RemoteDataSource mocked with custom APIService
--   Repository tests with APIError → DomainError mapping
--   Persistence tests (FavoriteCityStorage)
+-   Mapper tests using real JSON fixtures
+-   RemoteDataSource tests with mock API service
+-   Repository tests for APIError → DomainError mapping
+-   Persistent favorites storage tests
 
 ### ✔ Presentation Layer
 
--   ViewModel tests (Search, Home, Detail, Favorites)
--   Debounce, error handling, state management tests
+-   ViewModel tests for:
+    -   Search (debounce, error states, mapping)
+    -   Home (location + weather integration)
+    -   Weather Detail
+    -   Favorite City List
+-   Actor-based ImageLoader tests:
+    -   Cache behavior
+    -   Invalid data handling
+    -   Concurrent request deduplication
+
+------------------------------------------------------------------------
+
+## 🎨 UI & Experience
+
+### 🌈 Dynamic Weather Backgrounds
+
+The UI automatically changes its background based on the current weather
+conditions
+(e.g., sunny, cloudy, rainy, night-time conditions).
+
+### 🌗 Light & Dark Mode Support
+
+NimbusWeather adapts seamlessly to the user's system appearance.
+
+### 📱 Smooth UX Features
+
+-   Debounced search
+-   Animated transitions
+-   Clean and modern weather layouts
 
 ------------------------------------------------------------------------
 
@@ -71,11 +107,12 @@ NimbusWeather provides **high test reliability** through:
 -   Swift 5.9
 -   SwiftUI
 -   Combine
--   async/await
+-   async / await
 -   Actors
--   SPM modularization
--   XCTest
+-   XCTest (Unit Tests)
+-   Swift Package Manager
 -   OpenWeather API
+-   CoreLocation / Geocoding
 
 ------------------------------------------------------------------------
 

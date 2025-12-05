@@ -1,56 +1,63 @@
 # 🌤️ NimbusWeather
 
-**SwiftUI · Clean Architecture · Modüler SPM · MVVM · Async/Await · Tam
-Test Kapsamı**
+**SwiftUI · Clean Architecture · Modüler SPM · MVVM · Async/Await ·
+Yüksek Test Kapsamı**
 
-NimbusWeather, **SwiftUI** ve **Clean Architecture** prensipleriyle inşa
-edilmiş modern bir iOS hava durumu uygulamasıdır.
-Proje mimarisi; Domain, Data ve Presentation olmak üzere **modüler SPM
-paketlerine** ayrılmıştır. Bu yapı ölçeklenebilirlik, test edilebilirlik
-ve sürdürülebilirlik sağlar.
+NimbusWeather, **SwiftUI** ve **Clean Architecture** prensipleriyle
+geliştirilmiş modern bir iOS hava durumu uygulamasıdır.
+Proje yapısı; Domain, Data ve Presentation olmak üzere **SPM ile
+modüler** şekilde ayrılmıştır. Bu sayede proje kolayca ölçeklenebilir,
+test edilebilir ve bakımı uzun vadede oldukça rahattır.
 
 Uygulama, **OpenWeather One Call 3.0 API** kullanarak güncel, saatlik ve
-günlük hava durumu bilgilerini sunar.
+günlük hava durumu verilerini sunar.
 
 ------------------------------------------------------------------------
 
 ## ✨ Özellikler
 
--   **SwiftUI tabanlı modern UI**
--   **Clean Architecture** katmanlı yapı
--   **MVVM** ViewModel bazlı ekran mantığı
--   **SPM ile modüler proje yapısı**
--   **Actor tabanlı concurrency** (Görsel yükleme ve caching)
--   **Tam async/await destekli networking**
+-   **SwiftUI tabanlı modern arayüz**
+-   **Clean Architecture** katmanlı mimari
+-   **Tamamen test edinilebilir MVVM ViewModel yapıları**
+-   **SPM ile modüler proje mimarisi**
+-   **Actor tabanlı concurrency** (Görsel yükleme, caching)
+-   **Tam async/await destekli networking katmanı**
 -   **Gelişmiş hata yönetimi ve mapper katmanı**
--   **Konuma göre hava durumu getirme**
--   **Favori şehirler** (UserDefaults ile lokal kayıt)
--   **Tema ve sıcaklık birimi ayarları**
--   **Yüksek test kapsama oranı:**
-    -   Domain
-    -   Data (Mapper, DTO, Repository, DataSource)
-    -   Presentation (ViewModel testleri)
+-   **Konuma dayalı hava durumu sorgulama**
+-   **Favori şehirler sistemi** (UserDefaults ile kalıcı kayıt)
+-   **Tema ve sıcaklık birimi ayarları (Celsius / Fahrenheit)**
+-   **Hava durumuna göre değişen dinamik arka planlar** 🌦️
+-   **Light / Dark Mode desteği**
+-   **Debounce mekanizmalı performanslı arama**
+-   **Tüm katmanlar için kapsamlı testler** (Domain, Data, Presentation)
 
 ------------------------------------------------------------------------
 
 ## 🧱 Proje Mimarisi
 
     NimbusWeather/
-     ├─ NimbusWeatherDomain/      # Entity, UseCase, Repository Protokolleri
-     ├─ NimbusWeatherData/        # RemoteDataSource, Repository Impl, DTO, Mapper
-     ├─ NimbusWeather/            # SwiftUI Presentation (ViewModel + View)
-     └─ Tests/                    # Tüm modüller için unit testler
+     ├─ NimbusWeatherDomain/      # Entity, UseCase, Repository protokolleri
+     ├─ NimbusWeatherData/        # DataSource, Repository Impl, DTO, Mapper
+     ├─ NimbusWeather/            # SwiftUI View, ViewModel ve UI modelleri
+     └─ Tests/                    # Modüllerin tamamı için unit testler
+
+Bu yapı sayesinde:
+
+-   Test izolasyonu sağlanır
+-   Kod bağımlılıkları kontrol altında tutulur
+-   Modüller bağımsız geliştirilebilir
+-   Uzun vadede sürdürülebilir bir mimari oluşur
 
 ------------------------------------------------------------------------
 
 ## 🧪 Test Stratejisi
 
-NimbusWeather **güçlü test mimarisi** ile geliştirilmiştir.
+NimbusWeather **test odaklı** tasarlanmıştır.
 
 ### ✔ Domain
 
--   UseCase testleri
--   Error mapping
+-   UseCase iş mantığı
+-   Error dönüşümleri
 
 ### ✔ Data
 
@@ -61,11 +68,33 @@ NimbusWeather **güçlü test mimarisi** ile geliştirilmiştir.
 
 ### ✔ Presentation
 
--   SearchViewModel (debounce, error, state)
--   HomeViewModel
+-   SearchViewModel (debounce, hata, state)
+-   HomeViewModel (konum + hava durumu)
 -   WeatherDetailViewModel
--   FavoritesViewModel
+-   LocationListViewModel
 -   ImageLoaderActor testleri
+    -   Cache davranışı
+    -   Hatalı data testi
+    -   Concurrent çağrıların tek seferde işlenmesi
+
+------------------------------------------------------------------------
+
+## 🎨 Arayüz & Deneyim
+
+### 🌈 Hava Durumuna Göre Dinamik Arka Planlar
+
+Güncel hava durumuna göre arka plan otomatik değişir
+(güneşli, yağmurlu, bulutlu, gece teması vb.)
+
+### 🌗 Light / Dark Mode Desteği
+
+Uygulama sistem temasına göre otomatik uyum sağlar.
+
+### 📱 Modern Kullanıcı Deneyimi
+
+-   Debounce'lu arama
+-   Akıcı animasyonlar
+-   Temiz ve modern hava durumu kartları
 
 ------------------------------------------------------------------------
 
@@ -74,11 +103,12 @@ NimbusWeather **güçlü test mimarisi** ile geliştirilmiştir.
 -   Swift 5.9
 -   SwiftUI
 -   Combine
--   async/await
+-   async / await
 -   Actors
--   Swift Package Manager
 -   XCTest
+-   Swift Package Manager
 -   OpenWeather API
+-   CoreLocation / Geocoding
 
 ------------------------------------------------------------------------
 
