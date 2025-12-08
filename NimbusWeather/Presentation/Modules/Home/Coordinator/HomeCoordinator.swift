@@ -33,4 +33,12 @@ final class HomeCoordinator: ObservableObject {
         SettingsView()
     }
 
+    @ViewBuilder
+    func makeSearchContainerView(isSearching: Binding<Bool>, onLocationRequest: @escaping () -> Void) -> WeatherSearchContainerView {
+        WeatherSearchContainerView(
+            viewModel: container.makeSearchViewModel(),
+            isSearching: isSearching,
+            onLocationRequest: onLocationRequest
+        )
+    }
 }

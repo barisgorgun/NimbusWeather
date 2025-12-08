@@ -15,7 +15,7 @@ struct DailyForecastRowView: View {
             Text(model.day)
                 .font(.subheadline)
                 .foregroundColor(.white)
-                .frame(width: 80)
+                .frame(width: 75)
 
             Spacer()
 

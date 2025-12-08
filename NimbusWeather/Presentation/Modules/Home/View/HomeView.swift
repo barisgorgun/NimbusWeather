@@ -14,7 +14,6 @@ struct HomeView: View {
     @Environment(\.scenePhase) private var scenePhase
 
     @StateObject private var viewModel: HomeViewModel
-    @StateObject private var searchViewModel: SearchViewModel
 
     @State private var isShowingSettings = false
     @State private var isSearching = false
@@ -22,12 +21,8 @@ struct HomeView: View {
 
     private let permissionManager = LocationPermissionManager()
 
-    init(
-        viewModel: HomeViewModel,
-        searchViewModel: SearchViewModel,
-    ) {
+    init(viewModel: HomeViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
-        _searchViewModel = StateObject(wrappedValue: searchViewModel)
     }
 
     var body: some View {
@@ -70,10 +65,8 @@ struct HomeView: View {
             }
             .overlay(alignment: .top) {
                 if isSearching {
-                    WeatherSearchContainerView(
-                        viewModel: searchViewModel,
-                        isSearching: $isSearching
-                    ) {
+                    coordinator.makeSearchContainerView(
+                        isSearching: $isSearching) {
                         Task {
                             await viewModel.fetchWeatherForUserLocation()
                         }
