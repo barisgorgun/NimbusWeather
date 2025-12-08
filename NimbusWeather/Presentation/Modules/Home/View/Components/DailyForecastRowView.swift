@@ -15,6 +15,7 @@ struct DailyForecastRowView: View {
             Text(model.day)
                 .font(.subheadline)
                 .foregroundColor(.white)
+                .frame(width: 80)
 
             Spacer()
 
@@ -22,7 +23,7 @@ struct DailyForecastRowView: View {
             .frame(width: 32, height: 32)
 
             Spacer()
-                .frame(width: 24)
+                .frame(width: 35)
 
             Text(model.minTemp)
                 .font(.subheadline)
@@ -49,6 +50,14 @@ struct DailyForecastRowView: View {
 }
 
 #Preview {
+    VStack { DailyForecastRowView(
+        model: DailyWeatherUIModel(
+            day: "Wednesday",
+            minTemp: "17°",
+            maxTemp: "27°",
+            icon: "03d"
+        )
+    )
     DailyForecastRowView(
         model: DailyWeatherUIModel(
             day: "Monday",
@@ -57,6 +66,22 @@ struct DailyForecastRowView: View {
             icon: "03d"
         )
     )
+    DailyForecastRowView(
+        model: DailyWeatherUIModel(
+            day: "Monday",
+            minTemp: "17°",
+            maxTemp: "27°",
+            icon: "03d"
+        )
+    )
+    DailyForecastRowView(
+        model: DailyWeatherUIModel(
+            day: "Monday",
+            minTemp: "17°",
+            maxTemp: "27°",
+            icon: "03d"
+        )
+    ) }
     .background(
         LinearGradient(colors: [.blue, .purple],
                        startPoint: .top,

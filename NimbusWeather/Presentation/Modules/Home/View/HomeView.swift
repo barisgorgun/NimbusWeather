@@ -11,6 +11,7 @@ import CoreLocation
 
 struct HomeView: View {
     @EnvironmentObject var coordinator: HomeCoordinator
+    @Environment(\.scenePhase) private var scenePhase
 
     @StateObject private var viewModel: HomeViewModel
     @StateObject private var searchViewModel: SearchViewModel
@@ -73,7 +74,9 @@ struct HomeView: View {
                         viewModel: searchViewModel,
                         isSearching: $isSearching
                     ) {
-                        Task { await viewModel.fetchWeatherForUserLocation() }
+                        Task {
+                            await viewModel.fetchWeatherForUserLocation()
+                        }
                     }
                     .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
@@ -89,6 +92,13 @@ struct HomeView: View {
             coordinator.makeSettingsView()
         }
         .animation(.spring(response: 0.35, dampingFraction: 0.85), value: isShowingLocationList)
+        .onChange(of: scenePhase) {
+            if scenePhase == .active {
+                Task {
+                    await viewModel.refreshWeatherIfNeeded()
+                }
+            }
+        }
     }
 }
 

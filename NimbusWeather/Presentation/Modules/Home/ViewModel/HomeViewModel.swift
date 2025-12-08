@@ -15,6 +15,7 @@ final class HomeViewModel: ObservableObject {
 
     @Published var state: HomeState = .idle
     @Published var currentCondition: String?
+    @Published var lastFetchDate: Date? = nil
 
     private let weatherUseCase: GetWeatherUseCaseProtocol
     private let locationService: LocationServiceProtocol
@@ -43,6 +44,18 @@ final class HomeViewModel: ObservableObject {
         } catch {
             state = .error("Konum alınamadı")
         }
+    }
+
+    func refreshWeatherIfNeeded() async {
+        let now = Date()
+
+        if let last = lastFetchDate,
+           now.timeIntervalSince(last) < 60 {
+            return
+        }
+
+        lastFetchDate = now
+        await fetchWeatherForUserLocation()
     }
 }
 
