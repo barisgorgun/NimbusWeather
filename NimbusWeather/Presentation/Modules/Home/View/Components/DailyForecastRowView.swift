@@ -12,15 +12,17 @@ struct DailyForecastRowView: View {
 
     var body: some View {
         HStack {
-            Text(model.day)
-                .font(.subheadline)
-                .foregroundColor(.white)
-                .frame(width: 75)
-
-            Spacer()
-
-            CachedAsyncImage(url: model.iconURL)
-            .frame(width: 32, height: 32)
+            HStack {
+                Text(model.day)
+                    .font(.subheadline)
+                    .foregroundColor(.white)
+                
+                Spacer()
+                
+                CachedAsyncImage(url: model.iconURL)
+                    .frame(width: 32, height: 32)
+            }
+            .frame(width: 120)
 
             Spacer()
                 .frame(width: 35)

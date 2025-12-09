@@ -26,7 +26,6 @@ struct DailyForecastListView: View {
                     }
                 }
             }
-            .padding(12)
             .background(.ultraThinMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         }
